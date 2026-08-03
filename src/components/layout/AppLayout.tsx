@@ -5,7 +5,7 @@ export default function AppLayout() {
   return (
     <aside className="h-screen grid grid-cols-1 sm:grid-cols-[1fr_4fr] gap-6">
       <SideBar />
-      <main>
+      <main className="h-screen">
         <Outlet />
       </main>
     </aside>
