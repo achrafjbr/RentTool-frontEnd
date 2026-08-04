@@ -3,7 +3,7 @@ import AppRouter from "./routes/AppRouter";
 
 function App() {
   return (
-    <div className="bg-[#131414] text-white min-h-screen">
+    <div className="bg-[#131414] text-white   ">
       <AppRouter />
     </div>
   );

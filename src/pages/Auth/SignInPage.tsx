@@ -28,7 +28,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className=" pt-20">
+    <div className=" ">
       <div
         className="flex flex-col gap-5 
         justify-center items-center 

@@ -12,7 +12,11 @@ function SideBar() {
   );
   const links = isAuthenticated ? authLinks : guestLinks;
   return (
-    <div className="bg-[#1b1c1c] shadow-2xl flex flex-wrap flex-col p-5 ">
+    <div
+      className="bg-[#1b1c1c] shadow-2xl  h-full 
+           
+     flex flex-wrap flex-col p-5 "
+    >
       <div className="flex items-center gap-x-2">
         <div>LOGO</div>
         <div>
