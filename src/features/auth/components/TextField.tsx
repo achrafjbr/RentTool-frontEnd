@@ -1,4 +1,3 @@
-import { CircleFadingPlus, icons } from "lucide-react";
 import React from "react";
 
 export type FieldType = {
@@ -8,6 +7,7 @@ export type FieldType = {
   type: string;
   id?: string;
   label: string;
+  name: string;
   onChangeHandler: (
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => void;
@@ -19,6 +19,7 @@ export default function TextField({
   placeHolder,
   id,
   label,
+  name,
   onChangeHandler,
 }: FieldType) {
   return (
@@ -37,7 +38,7 @@ export default function TextField({
         focus:bg-white transition-all
          placeholder:text-gray-400 text-gray-800"
           required
-          name={type}
+          name={name}
           type={type}
         />
       </div>

@@ -7,16 +7,33 @@ import Header from "../../features/auth/components/Header";
 import AuthButton from "../../features/auth/components/AuthButton";
 import { RoutePath } from "../../routes/routes";
 import AuthNavigator from "../../features/auth/components/AuthNavigator";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { login } from "../../features/auth/authThunk";
+import type { SignInParams } from "../../features/auth/authTypes";
+import type { FailureResponse } from "../../types/failureResoponse";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
-  const [formData, setFromData] = useState({
+  const [formData, setFromData] = useState<SignInParams>({
     email: "",
     password: "",
   });
 
-  const onsubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.authentication);
+
+  const onsubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await dispatch(login(formData)).unwrap();
+      console.log("response", response);
+      toast.success("Account created successfully");
+    } catch (error) {
+      const err = error as FailureResponse;
+      toast.error(err.message);
+    }
   };
 
   const onChangeHandler = (
@@ -45,6 +62,7 @@ export default function SignInPage() {
         />
         <form className="w-full " onSubmit={(e) => onsubmit(e)}>
           <TextField
+            name="email"
             label="EMAIL"
             id="email"
             icon=<Mail
@@ -58,6 +76,7 @@ export default function SignInPage() {
           />
           <Divider padding="pt-2.5" />
           <TextField
+            name="password"
             label="MOT DE PASSE"
             id="password"
             icon=<Key
@@ -71,7 +90,10 @@ export default function SignInPage() {
           />
           <Divider padding="pt-8" />
 
-          <AuthButton title="Se connecter" />
+          <AuthButton
+            disabled={isLoading}
+            title={isLoading ? "Loading..." : "Se connecter"}
+          />
         </form>
         <AuthNavigator
           to={RoutePath.SIGNUPPAGE}

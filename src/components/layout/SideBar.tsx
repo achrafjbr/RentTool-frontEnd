@@ -39,7 +39,7 @@ function SideBar() {
         ))}
       </div>
       {/* profile */}
-      <ProfileCard />
+      {isAuthenticated && <ProfileCard />}
     </div>
   );
 }

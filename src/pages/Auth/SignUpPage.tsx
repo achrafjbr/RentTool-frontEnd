@@ -7,8 +7,15 @@ import TextField from "../../features/auth/components/TextField";
 import Header from "../../features/auth/components/Header";
 import PingPongIcon from "../../features/auth/components/PingPongIcon";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { register } from "../../features/auth/authThunk";
+import toast from "react-hot-toast";
+import type { FailureResponse } from "../../types/failureResoponse";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [formData, setFromData] = useState({
     fullName: "",
     phone: "",
@@ -16,16 +23,25 @@ export default function SignUpPage() {
     password: "",
   });
 
-  const onsubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const { isLoading } = useAppSelector((state) => state.authentication);
+
+  const onsubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      const response = await dispatch(register({ ...formData })).unwrap();
+      console.log("response", response);
+      toast.success("Account created successfully");
+      navigate(RoutePath.SIGNINPAGE);
+    } catch (error) {
+      const err = error as FailureResponse;
+      toast.error(err.message);
+    }
   };
 
   const onChangeHandler = (
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
     const { name, value } = e.target;
-    console.log(name, "|", value);
     setFromData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -47,6 +63,7 @@ export default function SignUpPage() {
         />
         <form className="w-full " onSubmit={(e) => onsubmit(e)}>
           <TextField
+            name="fullName"
             label="fullName"
             id="fullName"
             icon=<User2
@@ -61,6 +78,7 @@ export default function SignUpPage() {
           <Divider padding="pt-2.5" />
 
           <TextField
+            name="phone"
             label="phone"
             id="phone"
             icon=<Phone
@@ -69,12 +87,13 @@ export default function SignUpPage() {
             />
             onChangeHandler={onChangeHandler}
             placeHolder="+212 694 67 31 88"
-            type="text"
+            type="tel"
             value={formData.phone}
           />
           <Divider padding="pt-2.5" />
 
           <TextField
+            name="email"
             label="EMAIL"
             id="email"
             icon=<Mail
@@ -88,6 +107,7 @@ export default function SignUpPage() {
           />
           <Divider padding="pt-2.5" />
           <TextField
+            name="password"
             label="MOT DE PASSE"
             id="password"
             icon=<Key
@@ -101,7 +121,10 @@ export default function SignUpPage() {
           />
           <Divider padding="pt-8" />
 
-          <AuthButton title="Cree mon compte" />
+          <AuthButton
+            disabled={isLoading}
+            title={isLoading ? "loading..." : "Cree mon compte"}
+          />
         </form>
 
         <AuthNavigator

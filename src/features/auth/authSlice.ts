@@ -39,6 +39,7 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
+        console.log("state.erro", state.error);
       })
       // Login.
       .addCase(login.pending, (state) => {
@@ -46,8 +47,8 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.data.token;
-        state.user = action.payload.data.user;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
         state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
