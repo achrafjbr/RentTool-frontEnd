@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type {
-  AutenticationState,
-  SignInResponse,
-  SignUpResponse,
-} from "./authTypes";
-import type { SuccessResponse } from "../../types/successResponse";
-import { login, register } from "./authThunk";
-import type { State } from "../../types/State";
+
+import { login, me, register } from "./authThunk";
 import type { FailureResponse } from "../../types/failureResoponse";
+import { deleteToken, getToken } from "../../utilis/tokenService";
+import { socket } from "../../config/socket";
+import type { AutenticationState } from "./authTypes";
 
 const initialState: AutenticationState = {
   isLoading: false,
@@ -25,6 +22,9 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = "";
       state.isAuthenticated = false;
+      deleteToken();
+      socket.disconnect();
+      socket.auth = {};
     },
   },
   extraReducers(builder) {
@@ -39,7 +39,6 @@ export const authSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
-        console.log("state.erro", state.error);
       })
       // Login.
       .addCase(login.pending, (state) => {
@@ -47,11 +46,25 @@ export const authSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.token = action.payload.token;
-        state.user = action.payload.user;
+        state.token = action.payload.data.token;
+        state.user = action.payload.data.user;
         state.isAuthenticated = true;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      // me
+      .addCase(me.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(me.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload!.data;
+        state.token = getToken();
+        state.isAuthenticated = true;
+      })
+      .addCase(me.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       });

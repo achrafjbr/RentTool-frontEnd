@@ -11,6 +11,7 @@ export default function Header({ title, subTitle }: AuthHeaderProps) {
         text-2xl font-display
          font-semibold
          tracking-tight
+         text-center
           text-gray-900"
       >
         {title}

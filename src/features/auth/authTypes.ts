@@ -6,9 +6,13 @@ export interface AuthenticationResponse {
   email: string;
   phone: string;
   whatssap?: string;
+  picture?: string;
+  bio?: string;
+  city?: string;
 }
 
-export interface SignUpResponse extends AuthenticationResponse {}
+// export default interface SignUpResponse extends AuthenticationResponse {}
+// export interface Me extends AuthenticationResponse {}
 
 export interface SignInResponse {
   user: AuthenticationResponse;

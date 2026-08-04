@@ -58,8 +58,9 @@ export default function SignUpPage() {
       >
         <PingPongIcon />
         <Header
-          title="Connexion à votre espace"
-          subTitle="Retrouvez vos locations d’outils entre particuliers."
+          title="Rejoindre ToolRent"
+          subTitle="Louez des outils professionnels ou 
+          gagnez de l’argent en louant les vôtres."
         />
         <form className="w-full " onSubmit={(e) => onsubmit(e)}>
           <TextField

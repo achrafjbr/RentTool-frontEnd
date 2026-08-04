@@ -13,6 +13,8 @@ import { login } from "../../features/auth/authThunk";
 import type { SignInParams } from "../../features/auth/authTypes";
 import type { FailureResponse } from "../../types/failureResoponse";
 import toast from "react-hot-toast";
+import { setToken } from "../../utilis/tokenService";
+import { socket } from "../../config/socket";
 
 export default function SignInPage() {
   const [formData, setFromData] = useState<SignInParams>({
@@ -22,14 +24,22 @@ export default function SignInPage() {
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.authentication);
+  const { isLoading } = useAppSelector((state) => state.authentication);
 
   const onsubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await dispatch(login(formData)).unwrap();
-      console.log("response", response);
+      const {
+        data: { token },
+      } = await dispatch(login(formData)).unwrap();
+      console.log("token", token);
       toast.success("Account created successfully");
+      setToken(token);
+      socket.auth = {
+        token,
+      };
+      socket.connect();
+      navigate(RoutePath.HOMEPAGE);
     } catch (error) {
       const err = error as FailureResponse;
       toast.error(err.message);
@@ -40,7 +50,6 @@ export default function SignInPage() {
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
     const { name, value } = e.target;
-    console.log(name, "|", value);
     setFromData((prev) => ({ ...prev, [name]: value }));
   };
 
