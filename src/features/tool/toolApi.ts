@@ -24,7 +24,7 @@ export const deleteToolApi = async ({ toolId }: { toolId: string }) => {
 export const getAllToolsApi = async () => {
   // i'll use it for geust
   try {
-    const response = await api.get<SuccessResponse<Tool[]>>(`/tool/my-tools`);
+    const response = await api.get<SuccessResponse<Tool[]>>(`/tool`);
     return response.data;
   } catch (error) {
     throw error as FailureResponse;

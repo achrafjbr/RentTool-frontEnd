@@ -83,3 +83,6 @@ export const toolSlice = createSlice({
       });
   },
 });
+
+export const actions = toolSlice.actions;
+export default toolSlice.reducer;
