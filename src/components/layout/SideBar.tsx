@@ -13,17 +13,18 @@ function SideBar() {
   const links = isAuthenticated ? authLinks : guestLinks;
   return (
     <div
-      className="bg-[#1b1c1c] shadow-2xl  h-full 
-           
-     flex flex-wrap flex-col p-5 "
+      className="bg-[#ffffff] shadow sm:h-full
+       flex flex-wrap flex-col p-5 sm:p-5 "
     >
-      <div className="flex items-center gap-x-2">
+      {/* logo */}
+      <div className="flex items-center gap-x-2 text-black">
         <div>LOGO</div>
         <div>
           <div>TOOLRENT</div>
           <div>Particuliers</div>
         </div>
       </div>
+
       {/* Home  */}
       <Divider padding="pt-6" />
       <NavigationBar {...links[0]} />

@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ToolState } from "./toolTypes";
-import { deleteTool, getToolById } from "./toolThunks";
+import {
+  deleteTool,
+  getAllTools,
+  getAllToolsWithOwners,
+  getToolById,
+  myTools,
+} from "./toolThunks";
 import type { FailureResponse } from "../../types/failureResoponse";
 
 const initialState: ToolState = {
@@ -39,6 +45,39 @@ export const toolSlice = createSlice({
         );
       })
       .addCase(deleteTool.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      .addCase(getAllTools.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllTools.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tools = action.payload?.data ?? [];
+      })
+      .addCase(getAllTools.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      .addCase(myTools.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(myTools.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.ownerTools = action.payload?.data ?? [];
+      })
+      .addCase(myTools.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      .addCase(getAllToolsWithOwners.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllToolsWithOwners.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tools = action.payload?.data ?? [];
+      })
+      .addCase(getAllToolsWithOwners.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       });

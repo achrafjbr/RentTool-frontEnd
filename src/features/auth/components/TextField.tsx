@@ -26,13 +26,13 @@ export default function TextField({
     <label className="text-gray-400/50 text-sm truncate" htmlFor={id}>
       {label}
 
-      <div className="relative flex items-center w-full">
+      <div className="relative  flex items-center w-full">
         {icon}
         <input
           id={id}
           onChange={(e) => onChangeHandler(e)}
           placeholder={placeHolder}
-          className="w-full pl-9 pr-4 py-2.5 bg-gray-50 border
+          className="w-full pl-9 pr-4 py-2.5 bg-gray-200 border
            border-gray-100 rounded-xl text-sm focus:outline-none 
           focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500
         focus:bg-white transition-all

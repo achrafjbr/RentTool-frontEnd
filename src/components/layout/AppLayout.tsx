@@ -9,8 +9,8 @@ function AppLayout() {
     opacity: "opacity-10",
   });
   return (
-    <div className="h-screen grid grid-cols-1  sm:grid-cols-[280px_1fr]">
-      <aside className=" h-screen sticky top-0">
+    <div className="h-screen grid grid-cols-1 sm:grid-cols-[280px_1fr]">
+      <aside className=" sm:h-screen sm:sticky top-0">
         <SideBar />
       </aside>
 

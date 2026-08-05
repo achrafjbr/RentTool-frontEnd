@@ -14,6 +14,7 @@ export const useFadeAnimation = ({
   });
 
   useEffect(() => {
+    console.log("animation");
     const timer = setTimeout(() => {
       setAnimation({
         paddingTop: "pt-20",
@@ -24,6 +25,6 @@ export const useFadeAnimation = ({
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [paddingTop, opacity]);
   return animation;
 };

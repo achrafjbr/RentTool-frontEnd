@@ -27,32 +27,37 @@ function NavigationBar({
   style,
 }: NavigationProps) {
   return (
-    <NavLink
-      to={path}
-      style={({ isActive }) => ({
-        color: isActive ? "white" : "gray",
-        backgroundColor: isActive ? "black" : "transparent",
-      })}
-      className={` ${style} w-full transition-all text-xs font-semibold
-        rounded-xl flex flex-col my-1.5 p-2.5 
-      ${horizontalAlignment} 
-      ${textColor} ${bgColor} 
-      ${textColor} `}
-    >
-      <div className="flex gap-x-3 items-center">
+    <div className="my-1.5 w-full rounded-xl p-1 text-xs font-semibold transition-all hover:bg-gray-100">
+      <NavLink
+        to={path}
+        className={({ isActive }) =>
+          `
+        flex items-center gap-x-3 rounded-xl p-2.5
+        ${horizontalAlignment}
+        ${textColor}
+        ${bgColor}
+                ${style}
+
+        ${isActive ? "bg-black text-white" : "text-gray-500 hover:text-black"}
+      `
+        }
+      >
         {icon}
-        <div>{title}</div>
+
+        <span>{title}</span>
+
         {data && (
-          <div
-            className=" ml-auto bg-red-500 text-xs p-1 h-4 w-4
-           text-white flex justify-center items-center 
-           rounded-full"
+          <span
+            className="
+          ml-auto flex h-5 w-5 items-center justify-center
+          rounded-full bg-red-500 text-[10px] text-white
+        "
           >
             {data}
-          </div>
+          </span>
         )}
-      </div>
-    </NavLink>
+      </NavLink>
+    </div>
   );
 }
 

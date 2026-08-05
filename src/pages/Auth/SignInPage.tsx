@@ -32,14 +32,16 @@ export default function SignInPage() {
       const {
         data: { token },
       } = await dispatch(login(formData)).unwrap();
-      console.log("token", token);
+      if (!token) {
+        toast.error("Something went wrong");
+      }
       toast.success("Account created successfully");
       setToken(token);
       socket.auth = {
         token,
       };
       socket.connect();
-      navigate(RoutePath.HOMEPAGE);
+      navigate(RoutePath.HOMEPAGE, { replace: true });
     } catch (error) {
       const err = error as FailureResponse;
       toast.error(err.message);
@@ -54,13 +56,13 @@ export default function SignInPage() {
   };
 
   return (
-    <div className=" ">
+    <div className="">
       <div
         className="flex flex-col gap-5 
         justify-center items-center 
         w-[80%] sm:w-[50%] m-auto 
       rounded-2xl border 
-      border-gray-100 shadow-xl
+      border-gray-100 shadow-2xl 
        shadow-gray-100/50 p-8 sm:p-10
       "
       >
@@ -106,7 +108,7 @@ export default function SignInPage() {
         </form>
         <AuthNavigator
           to={RoutePath.SIGNUPPAGE}
-          title="          Pas encore de compte ? Rejoignez-nous"
+          title="Pas encore de compte ? Rejoignez-nous"
         />
       </div>
     </div>

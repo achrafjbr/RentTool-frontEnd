@@ -11,13 +11,14 @@ import OwnerSpacePage from "../pages/Spaces/OwnerSpacePage";
 import RenterSpacePage from "../pages/Spaces/RenterSpacePage";
 import NotificationPage from "../pages/NotificationPage";
 import AddToolPage from "../pages/Tools/AddToolPage";
+import GuestPage from "../pages/GuestPage";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path={RoutePath.HOMEPAGE} element={<HomePage />} />
           <Route
             path={RoutePath.TOOLDETAILSPAGE}
             element={<ToolDetailsPage />}
@@ -36,6 +37,7 @@ export default function AppRouter() {
           <Route path={RoutePath.ADDTOOLPAGE} element={<AddToolPage />} />
         </Route>
         <Route element={<AuthLayout />}>
+          <Route path={RoutePath.GUESTPAGE} element={<GuestPage />} />
           <Route path={RoutePath.SIGNINPAGE} element={<SignInPage />} />
           <Route path={RoutePath.SIGNUPPAGE} element={<SignUpPage />} />
         </Route>

@@ -13,6 +13,7 @@ function App() {
 
   useEffect(() => {
     const token = getToken();
+    console.log("start app");
     if (token) {
       dispatch(me());
       socket.auth = {
@@ -25,7 +26,7 @@ function App() {
     }
   }, []);
   return (
-    <div className="bg-[#131414] text-white">
+    <div className=" text-white  ">
       <Toaster
         position="top-right"
         gutter={12}

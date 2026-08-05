@@ -10,13 +10,14 @@ function AuthLayout() {
   });
 
   return (
-    <div className="h-screen grid grid-cols-1 sm:grid-cols-[280px_1fr]">
-      <aside className=" h-screen sticky top-0">
+    <div className=" h-screen grid grid-cols-1 sm:grid-cols-[280px_1fr]">
+      <aside className=" sm:h-screen sm:sticky top-0">
         <SideBar />
       </aside>
 
       <main
-        className={`sm:overflow-y-auto transition-all ease-in-out duration-100 ${paddingTop} ${opacity}`}
+        className={`sm:overflow-y-auto transition-all ease-in-out 
+          duration-100 ${paddingTop} ${opacity}`}
       >
         <Outlet />
         <Divider padding="pb-8" />

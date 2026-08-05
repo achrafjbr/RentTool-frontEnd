@@ -21,3 +21,17 @@
 //     }
 //   }, []);
 // };
+
+import { useNavigate } from "react-router-dom";
+
+const navigate = useNavigate();
+
+export const useNavigation = ({
+  to,
+  options,
+}: {
+  to: string;
+  options?: { replace: false };
+}) => {
+  navigate(to, options);
+};
