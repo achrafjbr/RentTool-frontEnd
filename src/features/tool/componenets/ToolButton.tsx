@@ -15,7 +15,7 @@ export default function ToolButton({
   prefix,
 }: ButtonProps) {
   return (
-    <div onClick={onclick} className={style}>
+    <div onClick={onclick} className={`${style} cursor-pointer`}>
       {icon && prefix && icon}
       {title}
       {icon && !prefix && icon}

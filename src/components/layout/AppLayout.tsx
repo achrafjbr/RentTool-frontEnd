@@ -15,7 +15,7 @@ function AppLayout() {
       </aside>
 
       <main
-        className={`sm:overflow-y-auto pl-20  transition-all 
+        className={`sm:overflow-y-auto   transition-all 
           ease-in-out duration-100 ${paddingTop} ${opacity} `}
       >
         <Outlet />

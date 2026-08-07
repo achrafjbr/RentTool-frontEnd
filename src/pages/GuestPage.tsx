@@ -4,7 +4,7 @@ import ToolButton from "../features/tool/componenets/ToolButton";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../routes/routes";
 import TextField from "../features/auth/components/TextField";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ToolSelect from "../features/tool/componenets/ToolSelect";
 import ToolCategory from "../features/tool/componenets/ToolCategory";
 import ToolCompoenet from "../features/tool/componenets/ToolCompoenet";
@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 
 export default function GuestPage() {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // dummy data, (I'll filter and remove duplicated cities from api)
   const cities: string[] = [
@@ -29,7 +30,7 @@ export default function GuestPage() {
   ];
   const [selectedCity, setSelectedCity] = useState<string>(cities[0]);
 
-  const hanldeCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const selecCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const city = event.target.value;
     console.log("City :", city);
     setSelectedCity(city);
@@ -43,6 +44,7 @@ export default function GuestPage() {
     "Jardinage & Extérieur",
     "Nettoyage & Entretien",
     "Ponçage & Polissage",
+    "Chantier & Équipement",
   ];
   const [selectedCategory, setSelectedCategorie] = useState<string>(
     categories[0],
@@ -67,6 +69,22 @@ export default function GuestPage() {
     }
   }, [dispatch]);
   console.log("TOOLS", tools);
+  const filterSearch = useMemo(() => {
+    return tools.map((tool) => {
+      const matchsQuery =
+        searchQuery.toLowerCase().includes(tool.name.toLowerCase()) ||
+        searchQuery.toLowerCase().includes(tool.description.toLowerCase());
+
+      const matchsCity =
+        selectedCity == tool.owner.city && selectedCity != "toutes les villes";
+
+      const matchsCategory =
+        selectedCategory == tool.category && selectedCity != "tout";
+      const matchsPrice = priceRange >= tool.pricePerDay;
+      return matchsQuery && matchsCategory && matchsCity && matchsPrice;
+    });
+  }, [searchQuery, selectedCity, selectedCategory, priceRange]);
+  console.log(filterSearch);
   return (
     <div className="">
       {isLoading && <Loader />}
@@ -123,7 +141,7 @@ export default function GuestPage() {
             <div className="flex-2 w-full sm:w-fit">
               <ToolSelect
                 cities={cities}
-                hanldeCityChange={hanldeCityChange}
+                hanldeCityChange={selecCityChange}
                 value={selectedCity}
                 id="cities"
                 name="cities"

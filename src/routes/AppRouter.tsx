@@ -42,6 +42,7 @@ export default function AppRouter() {
           <Route path={RoutePath.SIGNUPPAGE} element={<SignUpPage />} />
         </Route>
       </Routes>
+      <div></div>
     </BrowserRouter>
   );
 }

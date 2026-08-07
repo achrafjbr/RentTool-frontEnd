@@ -1,3 +1,5 @@
+import { allCities } from "../../../utilis/constants";
+
 export type SelectType = {
   icon?: React.JSX.Element;
   value: string;
@@ -32,7 +34,7 @@ export default function ToolSelect({
         name={name}
         id={id}
       >
-        {/* <option value={value}>{value}</option> */}
+        <option value={allCities}>{"Toutes les villes"}</option>
 
         {cities.map((city) => (
           <option key={city} value={city[0].toLowerCase() + city.substring(1)}>
