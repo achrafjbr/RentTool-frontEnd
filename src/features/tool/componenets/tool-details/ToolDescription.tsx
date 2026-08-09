@@ -1,6 +1,14 @@
 import { ShieldCheck } from "lucide-react";
 
-export default function ToolDescription() {
+export default function ToolDescription({
+  category,
+  city,
+  description,
+}: {
+  description?: string;
+  city?: string;
+  category?: string;
+}) {
   return (
     <div
       className="bg-white p-4 rounded-2xl border 
@@ -11,10 +19,7 @@ export default function ToolDescription() {
           Description de l'outil
         </h2>
         <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
-          desc: Perceuse visseuse à percussion puissante de 18V. Livrée avec 2
-          batteries 5.0Ah et un chargeur rapide. Idéale pour le perçage du
-          béton, brique, bois et métal. Mandrin autoserrant de 13 mm, couple de
-          serrage maximal de 62 Nm.
+          {description}
         </p>
       </div>
       <div className="border-t border-gray-50 pt-6">
@@ -24,15 +29,11 @@ export default function ToolDescription() {
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div className="bg-gray-50/50 p-3 rounded-xl border border-gray-100/50 flex flex-col justify-between">
             <span className="text-gray-400">Ville</span>
-            <span className="font-semibold text-gray-800 mt-1">
-              city: paris
-            </span>
+            <span className="font-semibold text-gray-800 mt-1">{city}</span>
           </div>
           <div className="bg-gray-50/50 p-3 rounded-xl border border-gray-100/50 flex flex-col justify-between">
             <span className="text-gray-400">Catégorie</span>
-            <span className="font-semibold text-gray-800 mt-1">
-              Perçage & Vissage
-            </span>
+            <span className="font-semibold text-gray-800 mt-1">{category}</span>
           </div>
 
           <div className="bg-gray-50/50 p-3 rounded-xl border border-gray-100/50 flex flex-col justify-between">

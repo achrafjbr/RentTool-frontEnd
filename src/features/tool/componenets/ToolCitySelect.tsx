@@ -12,7 +12,7 @@ export type SelectType = {
   hanldeCityChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-export default function ToolSelect({
+export default function ToolCitySelect({
   name,
   hanldeCityChange,
   value,

@@ -1,15 +1,12 @@
 import type React from "react";
-import { ToolStatus } from "../toolTypes";
-
 export type ButtonProps = {
   onclick: () => void;
   title: string;
   icon?: React.JSX.Element;
   style: string;
   prefix: boolean;
-  toolStatus?: ToolStatus;
 };
-export default function ToolButton({
+export default function ProfileButton({
   onclick,
   style,
   title,

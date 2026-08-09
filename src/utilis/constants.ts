@@ -10,4 +10,4 @@ export const categories: string[] = [
   "Chantier & Équipement",
 ];
 
-export const allCities = "toutes les villess";
+export const allCities = "toutes les villes";

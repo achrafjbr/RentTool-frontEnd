@@ -1,9 +1,11 @@
-import { Calendar, Calendar1 } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { useState } from "react";
 import { numberRentalDays } from "../../../../utilis/dates";
 import ToolButton from "../ToolButton";
+import { ToolStatus, type Tool } from "../../toolTypes";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 
-export default function ToolReservation() {
+export default function ToolReservation({ tool }: { tool?: Tool }) {
   const [toolReservation, setToolReservation] = useState({
     startDate: "",
     endDate: "",
@@ -19,13 +21,18 @@ export default function ToolReservation() {
     new Date(toolReservation.startDate),
     new Date(toolReservation.endDate),
   );
-  console.log("Reservation", toolReservation);
-  console.log("rentDays", rentDays);
+
+  const isAuthenticated = useAppSelector(
+    (state) => state.authentication.isAuthenticated,
+  );
+
+  const rentTool = () => {};
 
   return (
     <div className="relative">
       <div
-        className="bg-linear-to-r from-blue-600 via-emerald-400 to-blue-300  absolute  -top-1.5 p-4 py-8 w-full rounded-2xl border 
+        className="bg-linear-to-r from-blue-600 via-emerald-400 to-blue-300
+          absolute  -top-1.5 p-4 py-8 w-full rounded-2xl border 
         border-gray-100 shadow-lg space-y-3"
       ></div>
       <div
@@ -38,7 +45,7 @@ export default function ToolReservation() {
           </p>
           <div className="flex items-center gap-x-3">
             <span className="font-bold text-2xl">
-              15 <span>€</span>
+              {tool?.pricePerDay} <span>€</span>
             </span>
             <span className="tracking-wider text-gray-600/70 text-xs font-semibold ">
               / jour
@@ -55,10 +62,11 @@ export default function ToolReservation() {
           >
             <div className="flex items-center justify-between text-xs text-gray-500">
               <p className="space-x-1">
-                15 <span>€</span> x {rentDays} <span>jours</span>{" "}
+                {tool?.pricePerDay} <span>€</span> x {rentDays}{" "}
+                <span>jours</span>{" "}
               </p>
               <p>
-                {15 * rentDays} <span>€</span>
+                {tool ? tool!.pricePerDay * rentDays : ""} <span>€</span>
               </p>
             </div>
             <div className="flex items-center justify-between">
@@ -69,7 +77,7 @@ export default function ToolReservation() {
             <div className="flex items-center justify-between">
               <p>Total à payer</p>
               <p>
-                {15 * rentDays} <span>€</span>
+                {tool ? tool.pricePerDay * rentDays : ""} <span>€</span>
               </p>
             </div>
           </div>
@@ -110,24 +118,40 @@ export default function ToolReservation() {
                   toolReservation.startDate ||
                   new Date().toISOString().split("T")[0]
                 }
-                className="w-full pl-9 pr-3 py-2 bg-gray-50 border border-gray-100 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-gray-800 cursor-pointer"
+                className="w-full pl-9 pr-3 py-2 bg-gray-50 border
+                 border-gray-100 rounded-xl text-xs focus:outline-none 
+                 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500
+                  text-gray-800 cursor-pointer"
                 required
               />
             </div>
           </div>
         </div>
-        <ToolButton
-          onclick={() => {
-            console.log("reserver un tool");
-          }}
-          prefix={true}
-          icon={<Calendar size={20} />}
-          title="DEMANDER UNE LOCATION"
-          style="uppercase rounded-md bg-blue-500 font-semibold text-white flex 
-            justify-center items-center gap-1 p-3 w-full text-xs
-            shadow-lg
-            "
-        />
+        <button
+          disabled={
+            tool?.toolStatus == ToolStatus.RENTED || !isAuthenticated
+              ? true
+              : false
+          }
+          className="w-full"
+          type="button"
+        >
+          <ToolButton
+            onclick={() => {
+              console.log("reserver un tool");
+            }}
+            prefix={true}
+            icon={<Calendar size={20} />}
+            title={
+              tool?.toolStatus == ToolStatus.RENTED
+                ? "demande une location"
+                : "actuellement indisponible"
+            }
+            style={`uppercase rounded-md font-semibold text-white flex 
+            justify-center items-center gap-1 p-3 w-full text-xs shadow-lg 
+            ${tool?.toolStatus == ToolStatus.RENTED || !isAuthenticated ? "bg-gray-400" : "bg-blue-500"}  `}
+          />
+        </button>
         <div className="pt-6">
           <p className="text-xs text-center text-gray-700">
             🔒 Transaction 100% Sécurisée

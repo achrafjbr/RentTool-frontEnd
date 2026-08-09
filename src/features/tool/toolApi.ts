@@ -48,3 +48,12 @@ export const getAllToolsWithOwnersApi = async () => {
     throw error as FailureResponse;
   }
 };
+
+export const getToolCitiesApi = async () => {
+  try {
+    const response = await api.get<SuccessResponse<string[]>>("/tool/cities");
+    return response.data;
+  } catch (error) {
+    throw error as FailureResponse;
+  }
+};

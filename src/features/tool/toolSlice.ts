@@ -5,6 +5,7 @@ import {
   getAllTools,
   getAllToolsWithOwners,
   getToolById,
+  getToolCities,
   myTools,
 } from "./toolThunks";
 import type { FailureResponse } from "../../types/failureResoponse";
@@ -15,6 +16,7 @@ const initialState: ToolState = {
   tools: [],
   ownerTools: [],
   selectedTool: null,
+  cities: [],
 };
 
 export const toolSlice = createSlice({
@@ -78,6 +80,18 @@ export const toolSlice = createSlice({
         state.tools = action.payload?.data ?? [];
       })
       .addCase(getAllToolsWithOwners.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      //Tool cities
+      .addCase(getToolCities.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getToolCities.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cities = action.payload?.data ?? [];
+      })
+      .addCase(getToolCities.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       });

@@ -4,6 +4,7 @@ import {
   getAllToolsApi,
   getAllToolsWithOwnersApi,
   getToolByIdApi,
+  getToolCitiesApi,
   myToolsApi,
 } from "./toolApi";
 import type { FailureResponse } from "../../types/failureResoponse";
@@ -63,6 +64,17 @@ export const getAllToolsWithOwners = createAsyncThunk(
     try {
       const response = await getAllToolsWithOwnersApi();
       return response;
+    } catch (error) {
+      rejectWithValue(error as FailureResponse);
+    }
+  },
+);
+export const getToolCities = createAsyncThunk(
+  "tool/cities",
+  async (_, { rejectWithValue }) => {
+    try {
+      const cities = await getToolCitiesApi();
+      return cities;
     } catch (error) {
       rejectWithValue(error as FailureResponse);
     }

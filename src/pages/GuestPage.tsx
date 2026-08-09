@@ -5,86 +5,74 @@ import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../routes/routes";
 import TextField from "../features/auth/components/TextField";
 import { useEffect, useMemo, useState } from "react";
-import ToolSelect from "../features/tool/componenets/ToolSelect";
 import ToolCategory from "../features/tool/componenets/ToolCategory";
 import ToolCompoenet from "../features/tool/componenets/ToolCompoenet";
-import { ToolStatus } from "../features/tool/toolTypes";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
-import { getAllTools } from "../features/tool/toolThunks";
+import { getAllTools, getToolCities } from "../features/tool/toolThunks";
 import Loader from "../components/common/Loader";
 import type { FailureResponse } from "../types/failureResoponse";
 import toast from "react-hot-toast";
+import { categories } from "../utilis/constants";
+import ToolCitySelect from "../features/tool/componenets/ToolCitySelect";
 
 export default function GuestPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState<string>("");
-
-  // dummy data, (I'll filter and remove duplicated cities from api)
-  const cities: string[] = [
-    "Toutes les villes",
-    "Paris",
-    "Nice",
-    "Marseille",
-    "Toulouse",
-    "Mulhouse",
-  ];
-  const [selectedCity, setSelectedCity] = useState<string>(cities[0]);
-
-  const selecCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const city = event.target.value;
-    console.log("City :", city);
-    setSelectedCity(city);
-  };
-
-  // dummy data, (I'll filter and remove duplicated categories from api)
-  const categories: string[] = [
-    "Tout",
-    "Perçage & Vissage",
-    "Sciage & Découpe",
-    "Jardinage & Extérieur",
-    "Nettoyage & Entretien",
-    "Ponçage & Polissage",
-    "Chantier & Équipement",
-  ];
+  const [selectedCity, setSelectedCity] = useState<string>("Toutes les villes");
   const [selectedCategory, setSelectedCategorie] = useState<string>(
     categories[0],
   );
+  const [priceRange, setPriceRange] = useState<number>(50); // maximum price filter
 
+  const selecCityChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const city = event.target.value;
+    setSelectedCity(city);
+  };
   const hanldeSelectCategory = (category: string) => {
-    console.log("Category :", category);
     setSelectedCategorie(category);
   };
 
-  const [priceRange, setPriceRange] = useState<number>(50); // maximum price filter
+  const hanldeSearch = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+  };
 
   const dispatch = useAppDispatch();
-  const { tools, isLoading, error } = useAppSelector((state) => state.tool);
+  const { tools, isLoading, error, cities } = useAppSelector(
+    (state) => state.tool,
+  );
 
   useEffect(() => {
     try {
-      (async () => await dispatch(getAllTools()))();
+      (() => dispatch(getAllTools()).unwrap())();
+      (() => dispatch(getToolCities()).unwrap())();
     } catch (error) {
       const err = error as FailureResponse;
       toast.error(err.message);
     }
   }, [dispatch]);
-  console.log("TOOLS", tools);
+
   const filterSearch = useMemo(() => {
-    return tools.map((tool) => {
-      const matchsQuery =
-        searchQuery.toLowerCase().includes(tool.name.toLowerCase()) ||
-        searchQuery.toLowerCase().includes(tool.description.toLowerCase());
+    return tools.filter((tool) => {
+      const matchsCategory =
+        selectedCategory == tool.category ||
+        selectedCategory.toLowerCase() == "tout";
 
       const matchsCity =
-        selectedCity == tool.owner.city && selectedCity != "toutes les villes";
+        selectedCity.toLowerCase() === "toutes les villes" ||
+        selectedCity.toLowerCase() === tool.owner?.city.toLowerCase();
 
-      const matchsCategory =
-        selectedCategory == tool.category && selectedCity != "tout";
-      const matchsPrice = priceRange >= tool.pricePerDay;
+      const matchsQuery =
+        tool.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        searchQuery.trim() === "";
+
+      const matchsPrice =
+        priceRange <= tool.pricePerDay || priceRange >= tool.pricePerDay;
+
       return matchsQuery && matchsCategory && matchsCity && matchsPrice;
     });
-  }, [searchQuery, selectedCity, selectedCategory, priceRange]);
-  console.log(filterSearch);
+  }, [searchQuery, selectedCity, selectedCategory, priceRange, tools]);
+
   return (
     <div className="">
       {isLoading && <Loader />}
@@ -115,13 +103,18 @@ export default function GuestPage() {
             icon={<ArrowRight />}
           />
         </div>
+
         <Divider padding="sm:pt-8 pt-5" />
+
         <div className="rounded-2xl p-10 border border-gray-400/20 bg-white shadow-md">
-          <div className="flex flex-wrap flex-col sm:flex-row  items-center justify-between gap-2.5">
+          <div
+            className="flex flex-wrap flex-col sm:flex-row  
+          items-center justify-between gap-2.5"
+          >
             {/* tool Search */}
             <div className="flex-3 w-full sm:w-fit">
               <TextField
-                value=""
+                value={searchQuery}
                 type="text"
                 id="search"
                 icon={
@@ -132,14 +125,14 @@ export default function GuestPage() {
                 }
                 name="search"
                 label=""
-                onChangeHandler={() => {}}
+                onChangeHandler={(e) => hanldeSearch}
                 placeHolder="Que rechercher-vous ? (ex:percese, scie, teneuse...)"
               />
             </div>
 
             {/* City filter */}
             <div className="flex-2 w-full sm:w-fit">
-              <ToolSelect
+              <ToolCitySelect
                 cities={cities}
                 hanldeCityChange={selecCityChange}
                 value={selectedCity}
@@ -182,7 +175,7 @@ export default function GuestPage() {
           <ToolCategory
             hanldeSelectCategory={hanldeSelectCategory}
             selected={selectedCategory}
-            categories={categories}
+            categories={[...categories]}
           />
         </div>
 
@@ -201,20 +194,35 @@ export default function GuestPage() {
 
         {/* tools area */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {tools.map((tool) => (
-            <ToolCompoenet
-              key={tool._id}
-              category={tool.category}
-              description={tool.description}
-              depositAmount={tool.depositAmount}
-              name={tool.name}
-              pricePerDay={tool.pricePerDay}
-              image={tool.image}
-              owner={tool.owner}
-              toolStatus={tool.toolStatus}
-              _id={""}
-            />
-          ))}
+          {filterSearch.length === 0
+            ? tools.map((tool) => (
+                <ToolCompoenet
+                  key={tool._id}
+                  category={tool.category}
+                  description={tool.description}
+                  depositAmount={tool.depositAmount}
+                  name={tool.name}
+                  pricePerDay={tool.pricePerDay}
+                  image={tool.image}
+                  owner={tool.owner}
+                  toolStatus={tool.toolStatus}
+                  _id={tool._id}
+                />
+              ))
+            : filterSearch.map((tool) => (
+                <ToolCompoenet
+                  key={tool._id}
+                  category={tool.category}
+                  description={tool.description}
+                  depositAmount={tool.depositAmount}
+                  name={tool.name}
+                  pricePerDay={tool.pricePerDay}
+                  image={tool.image}
+                  owner={tool.owner}
+                  toolStatus={tool.toolStatus}
+                  _id={tool._id}
+                />
+              ))}
         </div>
         <Divider padding="sm:pt-8 pt-5" />
       </div>

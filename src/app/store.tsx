@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import toolReducer from "../features/tool/toolSlice";
+import ToolReview from "../features/reviews/toolReviews/toolReviewSlice";
+
 export const store = configureStore({
   reducer: {
     authentication: authReducer,
     tool: toolReducer,
+    toolReview: ToolReview,
   },
 });
 

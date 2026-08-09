@@ -2,6 +2,7 @@ import { ToolStatus, type Tool } from "../toolTypes";
 import Divider from "../../../components/common/Divider";
 import { MapPin } from "lucide-react";
 import ToolButton from "./ToolButton";
+import { useNavigate } from "react-router-dom";
 export default function ToolCompoenet({
   description,
   name,
@@ -10,7 +11,9 @@ export default function ToolCompoenet({
   pricePerDay,
   toolStatus,
   category,
+  _id,
 }: Tool) {
+  const navigate = useNavigate();
   return (
     <div
       className="bg-white rounded-2xl border border-gray-100
@@ -94,9 +97,7 @@ export default function ToolCompoenet({
           </div>
 
           <ToolButton
-            onclick={() => {
-              // () => onSelectTool(tool);
-            }}
+            onclick={() => navigate(`/tool-details/${_id}`)}
             prefix
             title="Voir les détails"
             style="bg-gray-950 hover:bg-blue-600 text-white font-medium 

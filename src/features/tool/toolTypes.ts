@@ -8,6 +8,8 @@ export interface Owner {
   _id: string;
   fullName: string;
   city: string;
+  picture: string;
+  createdAt: string;
 }
 export interface Tool {
   _id: string;
@@ -25,4 +27,5 @@ export interface ToolState extends State {
   tools: Tool[];
   selectedTool: Tool | null;
   ownerTools: Tool[];
+  cities: string[];
 }
