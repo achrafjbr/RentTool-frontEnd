@@ -11,3 +11,17 @@ export const getUserByIdApi = async (userId: string) => {
     throw error as FailureResponse;
   }
 };
+
+export const updateUserProfileApi = async ({
+  profile,
+}: {
+  profile: FormData;
+}) => {
+  try {
+    return (
+      await api.patch<SuccessResponse<UserProfile>>("user/profile", profile)
+    ).data;
+  } catch (error) {
+    throw error as FailureResponse;
+  }
+};

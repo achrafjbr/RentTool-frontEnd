@@ -9,12 +9,13 @@ import Error from "../../../components/common/Error";
 import type { UserReviewResponse } from "../userReviews/userReviewTypes";
 import UserReview from "./UserReview";
 import { addUserReview } from "../userReviews/userReviewThunks";
+import type { UserProfile } from "../../profile/profileTypes";
 
 export default function UserReviews({
-  userId,
+  profile,
   reviews,
 }: {
-  userId?: string;
+  profile?: UserProfile;
   reviews: UserReviewResponse[];
 }) {
   const [comment, setComment] = useState<string>("");
@@ -26,19 +27,16 @@ export default function UserReviews({
     setComment(comment);
   };
   const addComment = async ({ review }: { review: string }) => {
-    if (!review || review == "" || !userId) {
+    if (!review || review == "" || !profile?._id) {
       toast.error("should be valid review ...!");
     }
     review.trim();
-    await dispatch(addUserReview({ review: review, to: userId! }));
+    await dispatch(addUserReview({ review: review, to: profile?._id! }));
   };
 
   const authentication = useAppSelector((state) => state.authentication);
   const { isLoading, error } = useAppSelector((state) => state.toolReview);
   const dispatch = useAppDispatch();
-  console.log("owner", userId);
-  console.log("connected - user", authentication.user?._id);
-
   return (
     <div>
       {isLoading || (authentication.isLoading && <Loader />)}
@@ -81,7 +79,7 @@ export default function UserReviews({
                 name="commentaire"
                 type="text"
                 id="commentaire"
-                placeHolder="Commentaire s'est passée à l'utilisateur de cet outil? (état de fonctionement, ergonomie, praticité...)"
+                placeHolder={`Partager votre experience de location avec ${profile?.fullName} (punctualité, politesse, soin de matérial...)`}
                 onChangeHandler={commentHandler}
                 value={comment}
               />

@@ -82,7 +82,7 @@ export default function ProfilePage() {
                 <ProfileDescription profile={profile.profile!} />
                 <OwnerTools tools={tool.ownerTools} />
                 <UserReviews
-                  userId={profile.profile?._id}
+                  profile={profile.profile ?? undefined}
                   reviews={userReview.reviews}
                 />
               </div>

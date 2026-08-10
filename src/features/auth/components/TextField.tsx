@@ -23,6 +23,7 @@ export default function TextField({
   label,
   name,
   height,
+  value,
   onChangeHandler,
 }: FieldType) {
   return (
@@ -32,6 +33,7 @@ export default function TextField({
       <div className="relative flex  items-center justify-start w-full">
         {icon}
         <input
+          value={value}
           id={id}
           onChange={(e) => onChangeHandler(e)}
           placeholder={placeHolder}

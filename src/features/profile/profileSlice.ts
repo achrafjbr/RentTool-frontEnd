@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { UserProfileState } from "./profileTypes";
-import { getUserById } from "./profileThunks";
+import { getUserById, updateUserProfile } from "./profileThunks";
 import type { FailureResponse } from "../../types/failureResoponse";
 
 const initialState: UserProfileState = {
@@ -22,6 +22,18 @@ export const profileSlice = createSlice({
         state.profile = action.payload.data;
       })
       .addCase(getUserById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      })
+      // update profile
+      .addCase(updateUserProfile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.profile = action.payload.data;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       });

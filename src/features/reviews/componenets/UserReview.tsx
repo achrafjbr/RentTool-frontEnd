@@ -5,6 +5,7 @@ import TextField from "../../auth/components/TextField";
 import { deleteToolReview } from "../toolReviews/toolReviewThunks";
 import Loader from "../../../components/common/Loader";
 import type { UserReviewResponse } from "../userReviews/userReviewTypes";
+import { deleteUserReview } from "../userReviews/userReviewThunks";
 
 export default function UserReview({
   review,
@@ -105,7 +106,7 @@ export default function UserReview({
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
-                      dispatch(deleteToolReview(review._id));
+                      dispatch(deleteUserReview(review._id));
                       // delete review
                     }}
                     className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50"
