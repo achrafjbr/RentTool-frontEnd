@@ -12,7 +12,7 @@ import type {
 import type { FailureResponse } from "../../../types/failureResoponse";
 
 export const addUserReview = createAsyncThunk(
-  "add/tool/review",
+  "add/user/review",
   async (data: UserReviewParams, { rejectWithValue }) => {
     try {
       return await addUserReviewApi(data);
@@ -23,7 +23,7 @@ export const addUserReview = createAsyncThunk(
 );
 
 export const getUserReviews = createAsyncThunk(
-  "tool/review",
+  "user/review",
   async (toolId: string, { rejectWithValue }) => {
     try {
       return await getUserReviewsApi(toolId);
@@ -34,7 +34,7 @@ export const getUserReviews = createAsyncThunk(
 );
 
 export const updateUserReview = createAsyncThunk(
-  "update/tool",
+  "update/review",
   async (
     updateUserReviewParams: UpdateUserReviewParams,
     { rejectWithValue },
@@ -48,7 +48,7 @@ export const updateUserReview = createAsyncThunk(
 );
 
 export const deleteUserReview = createAsyncThunk(
-  "delete/tool",
+  "delete/review",
   async (toolId: string, { rejectWithValue }) => {
     try {
       return await deleteUserReviewApi(toolId);

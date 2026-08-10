@@ -1,12 +1,33 @@
 import { Check, PenLine, X } from "lucide-react";
 import TextField from "../../auth/components/TextField";
 import ProfileButton from "./ProfileButton";
+import type { UserProfile } from "../profileTypes";
+import { useState } from "react";
 
 export default function ProfileMofication({
   onclick,
+  profile,
 }: {
+  profile: UserProfile;
   onclick: () => void;
 }) {
+  const { phone, fullName, bio, city, picture } = profile;
+  const [newProfile, setNewProfile] = useState({
+    fullName: fullName,
+    phone: phone,
+    bio: bio,
+    city: city,
+    picture: picture,
+  });
+
+  const modifyProfileHandler = (
+    e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
+  ) => {
+    const value = e.target.value;
+    const key = e.target.name;
+    console.log("KEY", key);
+    setNewProfile((prev) => ({ ...prev, [key]: value }));
+  };
   return (
     <div
       className=" bg-white p-4  rounded-2xl border 
@@ -27,29 +48,29 @@ export default function ProfileMofication({
         <div className="flex justify-between items-center">
           <TextField
             label="Nom complet"
-            name="name"
+            name="fullName"
             placeHolder=""
             type="text"
-            value=""
-            onChangeHandler={() => console.log("ss")}
+            value={fullName}
+            onChangeHandler={(e) => modifyProfileHandler(e)}
           />
           <TextField
             label="Téléphone"
             name="phone"
             placeHolder=""
             type="text"
-            value=""
-            onChangeHandler={() => console.log("ss")}
+            value={phone}
+            onChangeHandler={(e) => modifyProfileHandler(e)}
           />
         </div>
         <div className="flex justify-between items-center">
           <TextField
-            label="Téléphone"
-            name="phone"
+            label="Ville"
+            name="city"
             placeHolder=""
             type="text"
-            value=""
-            onChangeHandler={() => console.log("ss")}
+            value={city == null ? "" : city}
+            onChangeHandler={(e) => modifyProfileHandler(e)}
           />
         </div>
         <TextField
@@ -58,9 +79,10 @@ export default function ProfileMofication({
           name="bio"
           placeHolder=""
           type="text"
-          value=""
-          onChangeHandler={() => console.log("ss")}
+          value={bio == null ? "" : bio}
+          onChangeHandler={(e) => modifyProfileHandler(e)}
         />
+        <input type="file" name="picture" id="picture" />
         <div className="flex justify-end items-center gap-x-3.5">
           {/* annuler */}
           <ProfileButton
@@ -81,6 +103,7 @@ export default function ProfileMofication({
              items-center p-2 text-xs gap-1.5"
             icon={<Check size={18} className="text-white" />}
             onclick={() => {
+              // check if required fields are existed such as : (fullName, phone)
               console.log("Enregistrer");
               onclick();
             }}

@@ -23,8 +23,8 @@ export default function ToolDetailsPage() {
       if (!id) {
         return;
       }
-      dispatch(getToolReviews({ toolId: id }));
-      dispatch(getToolById({ toolId: id }));
+      dispatch(getToolReviews({ toolId: id })).unwrap();
+      dispatch(getToolById({ toolId: id })).unwrap();
     } catch (error) {
       const err = error as FailureResponse;
       toast.error(err.message);

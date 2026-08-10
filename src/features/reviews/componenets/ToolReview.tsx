@@ -6,7 +6,11 @@ import TextField from "../../auth/components/TextField";
 import { deleteToolReview } from "../toolReviews/toolReviewThunks";
 import Loader from "../../../components/common/Loader";
 
-export default function Review({ review }: { review?: ToolReviewResponse }) {
+export default function ToolReview({
+  review,
+}: {
+  review?: ToolReviewResponse;
+}) {
   if (!review) {
     return null;
   }
