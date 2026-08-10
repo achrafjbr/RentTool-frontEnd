@@ -30,9 +30,11 @@ export const getAllToolsApi = async () => {
     throw error as FailureResponse;
   }
 };
-export const myToolsApi = async () => {
+export const myToolsApi = async (userId: string) => {
   try {
-    const response = await api.get<SuccessResponse<Tool[]>>(`/tool/my-tools`);
+    const response = await api.get<SuccessResponse<Tool[]>>(
+      `/tool/my-tools/${userId}`,
+    );
     return response.data;
   } catch (error) {
     throw error as FailureResponse;

@@ -1,13 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import toolReducer from "../features/tool/toolSlice";
-import ToolReview from "../features/reviews/toolReviews/toolReviewSlice";
+import toolReviewReducer from "../features/reviews/toolReviews/toolReviewSlice";
+import userReviewReducer from "../features/reviews/userReviews/userReviewSlice";
+
+import profileReducer from "../features/profile/profileSlice";
 
 export const store = configureStore({
   reducer: {
     authentication: authReducer,
     tool: toolReducer,
-    toolReview: ToolReview,
+    toolReview: toolReviewReducer,
+    profile: profileReducer,
+    userReview: userReviewReducer,
   },
 });
 

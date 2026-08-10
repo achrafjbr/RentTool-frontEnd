@@ -9,9 +9,9 @@ import type {
   UpdateUserReviewParams,
   UserReviewParams,
 } from "./userReviewTypes";
-import type { FailureResponse } from "../../../../types/failureResoponse";
+import type { FailureResponse } from "../../../types/failureResoponse";
 
-export const addToolReview = createAsyncThunk(
+export const addUserReview = createAsyncThunk(
   "add/tool/review",
   async (data: UserReviewParams, { rejectWithValue }) => {
     try {
@@ -22,7 +22,7 @@ export const addToolReview = createAsyncThunk(
   },
 );
 
-export const getUserReview = createAsyncThunk(
+export const getUserReviews = createAsyncThunk(
   "tool/review",
   async (toolId: string, { rejectWithValue }) => {
     try {

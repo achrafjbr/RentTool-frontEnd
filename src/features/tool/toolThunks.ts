@@ -47,9 +47,9 @@ export const getAllTools = createAsyncThunk(
 
 export const myTools = createAsyncThunk(
   "my/tools",
-  async (_, { rejectWithValue }) => {
+  async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await myToolsApi();
+      const response = await myToolsApi(userId);
       return response;
     } catch (error) {
       rejectWithValue(error as FailureResponse);
