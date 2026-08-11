@@ -1,4 +1,4 @@
-import { CameraOff, CameraOffIcon, LogOut, PowerOffIcon } from "lucide-react";
+import { CameraOffIcon, LogOut, PowerOffIcon } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { logout } from "../features/auth/authSlice";
 import { RoutePath } from "../routes/routes";

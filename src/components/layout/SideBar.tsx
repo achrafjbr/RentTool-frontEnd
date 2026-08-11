@@ -10,6 +10,7 @@ function SideBar() {
   const { isAuthenticated, user } = useAppSelector(
     (state) => state.authentication,
   );
+
   const links = isAuthenticated ? authLinks : guestLinks;
   return (
     <div

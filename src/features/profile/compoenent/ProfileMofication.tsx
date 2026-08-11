@@ -5,6 +5,7 @@ import type { UserProfile } from "../profileTypes";
 import { useState } from "react";
 import { useAppDispatch } from "../../../hooks/reduxHooks";
 import { updateUserProfile } from "../profileThunks";
+import { me } from "../../auth/authThunk";
 export interface ProfileState {
   fullName: string;
   phone: string;
@@ -32,13 +33,13 @@ export default function ProfileMofication({
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
     const key = e.target.name;
-    console.log("KEY", key);
     if (key == "picture") {
       const picture = e.target.files![0];
       setNewProfile((prev) => ({ ...prev, picture: picture }));
+    } else {
+      const value = e.target.value;
+      setNewProfile((prev) => ({ ...prev, [key]: value }));
     }
-    const value = e.target.value;
-    setNewProfile((prev) => ({ ...prev, [key]: value }));
   };
 
   const dispatch = useAppDispatch();
@@ -151,6 +152,8 @@ export default function ProfileMofication({
                 formData.append("picture", newProfile.picture);
               }
               await dispatch(updateUserProfile(formData));
+              await dispatch(me());
+
               onclick();
             }}
           />

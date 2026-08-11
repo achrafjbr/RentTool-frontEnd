@@ -1,13 +1,8 @@
 import axios from "axios";
-import { deleteToken, getToken } from "../utilis/tokenService";
-import { useAppDispatch } from "../hooks/reduxHooks";
-import { logout } from "../features/auth/authSlice";
+import { getToken } from "../utilis/tokenService";
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
   timeout: 10000,
 });
 
