@@ -3,7 +3,14 @@ import type { FailureResponse } from "../../types/failureResoponse";
 import type { SuccessResponse } from "../../types/successResponse";
 import type { Tool } from "./toolTypes";
 
-export const publishToolApi = () => {};
+export const publishToolApi = async (tool: FormData) => {
+  try {
+    return (await api.post<SuccessResponse<Tool>>("/tool/publish_tool", tool))
+      .data;
+  } catch (error) {
+    throw error as FailureResponse;
+  }
+};
 
 export const getToolByIdApi = async ({ toolId }: { toolId: string }) => {
   try {

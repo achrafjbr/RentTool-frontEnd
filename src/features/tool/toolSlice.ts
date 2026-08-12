@@ -7,6 +7,7 @@ import {
   getToolById,
   getToolCities,
   myTools,
+  publishTool,
 } from "./toolThunks";
 import type { FailureResponse } from "../../types/failureResoponse";
 
@@ -92,6 +93,18 @@ export const toolSlice = createSlice({
         state.cities = action.payload?.data ?? [];
       })
       .addCase(getToolCities.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as FailureResponse;
+      }) //Publish Tool
+      .addCase(publishTool.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(publishTool.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.tools.unshift(action.payload?.data);
+        // state.ownerTools.unshift(action.payload?.data);
+      })
+      .addCase(publishTool.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       });

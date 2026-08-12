@@ -8,7 +8,7 @@ export interface Owner {
   _id: string;
   fullName: string;
   city: string;
-  picture: string;
+  picture?: string;
   createdAt: string;
 }
 export interface Tool {
@@ -19,6 +19,7 @@ export interface Tool {
   pricePerDay: number;
   depositAmount: number;
   image: string;
+  city?: string; // could be null for now i'll change it to be required later on.
   toolStatus: ToolStatus;
   owner: Owner;
 }

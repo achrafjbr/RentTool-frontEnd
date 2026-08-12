@@ -6,6 +6,7 @@ import {
   getToolByIdApi,
   getToolCitiesApi,
   myToolsApi,
+  publishToolApi,
 } from "./toolApi";
 import type { FailureResponse } from "../../types/failureResoponse";
 
@@ -77,6 +78,17 @@ export const getToolCities = createAsyncThunk(
       return cities;
     } catch (error) {
       rejectWithValue(error as FailureResponse);
+    }
+  },
+);
+
+export const publishTool = createAsyncThunk(
+  "publish/tool",
+  async (tool: FormData, { rejectWithValue }) => {
+    try {
+      return await publishToolApi(tool);
+    } catch (error) {
+      throw rejectWithValue(error as FailureResponse);
     }
   },
 );

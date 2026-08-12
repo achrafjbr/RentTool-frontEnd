@@ -28,7 +28,7 @@ export default function TextField({
 }: FieldType) {
   return (
     <label
-      className=" uppercase text-gray-400/50 text-sm truncate"
+      className=" text-xs sm:text-sm uppercase text-gray-500 truncate"
       htmlFor={id}
     >
       {label}
@@ -40,7 +40,7 @@ export default function TextField({
           id={id}
           onChange={(e) => onChangeHandler(e)}
           placeholder={placeHolder}
-          className={`w-full pl-9 pr-4 py-2.5 bg-gray-200 border
+          className={`w-full pl-9 pr-4 py-2.5 text-wrap bg-gray-200 border
            border-gray-100 rounded-xl text-sm focus:outline-none 
           focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500
         focus:bg-white transition-all
