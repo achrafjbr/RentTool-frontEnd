@@ -27,7 +27,10 @@ export default function TextField({
   onChangeHandler,
 }: FieldType) {
   return (
-    <label className="text-gray-400/50 text-sm truncate" htmlFor={id}>
+    <label
+      className=" uppercase text-gray-400/50 text-sm truncate"
+      htmlFor={id}
+    >
       {label}
 
       <div className="relative flex  items-center justify-start w-full">
