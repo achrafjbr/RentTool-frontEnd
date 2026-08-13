@@ -36,13 +36,18 @@ export default function AppRouter() {
 
           <Route path={RoutePath.ADDTOOLPAGE} element={<AddToolPage />} />
         </Route>
+
         <Route element={<AuthLayout />}>
           <Route path={RoutePath.GUESTPAGE} element={<GuestPage />} />
           <Route path={RoutePath.SIGNINPAGE} element={<SignInPage />} />
           <Route path={RoutePath.SIGNUPPAGE} element={<SignUpPage />} />
+          <Route
+            path={RoutePath.TOOLDETAILSPAGE}
+            element={<ToolDetailsPage />}
+          />
+          <Route path={RoutePath.PROFILEPAGE} element={<ProfilePage />} />
         </Route>
       </Routes>
-      <div></div>
     </BrowserRouter>
   );
 }

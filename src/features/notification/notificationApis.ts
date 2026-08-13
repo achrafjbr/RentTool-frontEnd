@@ -5,8 +5,11 @@ import type { Notification } from "./notificationTypes";
 
 export const myNotificationApi = async () => {
   try {
-    return (await api.get<SuccessResponse<Notification[]>>("/notification/me"))
-      .data;
+    const response = (
+      await api.get<SuccessResponse<Notification[]>>("/notification/me")
+    ).data;
+    console.log("response", response);
+    return response;
   } catch (error) {
     throw error as FailureResponse;
   }
@@ -28,7 +31,7 @@ export const getNotificationByIdApi = async ({
   }
 };
 
-export const unReadNotificationCountApi = async () => {
+export const unReadNotificationApi = async () => {
   try {
     return (await api.get<SuccessResponse<number>>("/notification/un-read"))
       .data;
@@ -43,11 +46,13 @@ export const markNotificationAsReadApi = async ({
   notificationId: string;
 }) => {
   try {
-    return (
-      await api.get<SuccessResponse<Notification>>(
+    const response = (
+      await api.patch<SuccessResponse<Notification>>(
         `/notification/${notificationId}/read`,
       )
     ).data;
+    console.log("ui response", response);
+    return response;
   } catch (error) {
     throw error as FailureResponse;
   }
@@ -55,7 +60,7 @@ export const markNotificationAsReadApi = async ({
 
 export const markAllNotificationAsReadApi = async () => {
   try {
-    return (await api.get<SuccessResponse<number>>("/notification/read-all"))
+    return (await api.patch<SuccessResponse<number>>("/notification/read-all"))
       .data;
   } catch (error) {
     throw error as FailureResponse;

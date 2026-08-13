@@ -11,10 +11,11 @@ export enum NotificationType {
 }
 
 export interface Notification {
+  _id: string;
   title: string;
   message: string;
   receiver: string;
-  type: Notification;
+  type: NotificationType;
   related: string;
   isRead: boolean;
   isSeen: boolean;
@@ -23,13 +24,14 @@ export interface Notification {
 }
 
 export interface Sender {
+  _id: string;
   fullName: string;
   picture?: string;
   createdAt?: string;
 }
 
 export interface NotificationState extends State {
-  Notifications: Notification[];
-  Notification: Notification;
+  notifications: Notification[];
+  notification: Notification | null;
   unReadNotificationCount: number;
 }

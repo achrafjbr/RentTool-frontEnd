@@ -1,13 +1,17 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import Divider from "../common/Divider";
 import { useFadeAnimation } from "../../hooks/useFadeAnimation";
-
+import { useAppSelector } from "../../hooks/reduxHooks";
+import { RoutePath } from "../../routes/routes";
+import { motion } from "motion/react";
 function AuthLayout() {
-  const { paddingTop, opacity } = useFadeAnimation({
-    paddingTop: "pt-50",
-    opacity: "opacity-10",
-  });
+  const { isAuthenticated } = useAppSelector((state) => state.authentication);
+
+  // const { paddingTop, opacity } = useFadeAnimation({
+  //   paddingTop: "pt-50",
+  //   opacity: "opacity-10",
+  // });
 
   return (
     <div className=" h-screen grid grid-cols-1 sm:grid-cols-[280px_1fr]">
@@ -15,13 +19,23 @@ function AuthLayout() {
         <SideBar />
       </aside>
 
-      <main
-        className={`sm:overflow-y-auto transition-all ease-in-out 
-          duration-100 ${paddingTop} ${opacity}`}
-      >
-        <Outlet />
-        <Divider padding="pb-8" />
-      </main>
+      {!isAuthenticated ? (
+        <motion.main
+          animate={{ paddingTop: "5rem", opacity: "100%" }}
+          initial={{
+            paddingTop: "12.5rem",
+            opacity: "10%",
+            translate: "all ease-in-out 200ms ",
+          }}
+          className={`sm:overflow-y-auto transition-all ease-in-out 
+          duration-100 `}
+        >
+          <Outlet />
+          <Divider padding="pb-8" />
+        </motion.main>
+      ) : (
+        <Navigate to={RoutePath.HOMEPAGE} replace />
+      )}
     </div>
   );
 }

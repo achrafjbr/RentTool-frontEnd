@@ -5,7 +5,7 @@ import {
   markAllNotificationAsReadApi,
   markNotificationAsReadApi,
   myNotificationApi,
-  unReadNotificationCountApi,
+  unReadNotificationApi,
 } from "./notificationApis";
 
 export const myNotification = createAsyncThunk(
@@ -37,11 +37,11 @@ export const getNotificationById = createAsyncThunk(
   },
 );
 
-export const unReadNotificationCount = createAsyncThunk(
+export const unReadNotification = createAsyncThunk(
   "notifications/count",
   async (_, { rejectWithValue }) => {
     try {
-      return await unReadNotificationCountApi();
+      return await unReadNotificationApi();
     } catch (error) {
       throw rejectWithValue(error as FailureResponse);
     }
@@ -59,6 +59,7 @@ export const markNotificationAsRead = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
+      console.log("notificationId", notificationId);
       return await markNotificationAsReadApi({ notificationId });
     } catch (error) {
       throw rejectWithValue(error as FailureResponse);

@@ -40,6 +40,7 @@ export default function ProfilePage() {
       toast.error(err.message);
     }
   }, [dispatch]);
+
   const profile = useAppSelector((state) => state.profile);
   const userReview = useAppSelector((state) => state.userReview);
   const tool = useAppSelector((state) => state.tool);

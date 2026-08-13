@@ -76,6 +76,7 @@ export default function HomePage() {
   return (
     <div className="">
       {isLoading && <Loader />}
+      {error && toast.error(error.message)}
       <div className="sm:pl-13 pl-8 sm:pt-10 w-[95%]">
         <div className=" bg-linear-to-br from-gray-500 to-gray-400 p-5 rounded-2xl ">
           <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight leading-tight">

@@ -20,9 +20,6 @@ function App() {
         token,
       };
       socket.connect();
-      // navigation to home
-    } else {
-      // navigate(RoutePath.SIGNINPAGE);
     }
   }, []);
   return (

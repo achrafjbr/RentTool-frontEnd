@@ -11,3 +11,9 @@ export const categories: string[] = [
 ];
 
 export const allCities = "toutes les villes";
+
+export const NOTIFICATION = "notification";
+export const RENTAL_CREATED = "rental_created";
+export const RENTAL_UPDATED = "rental_updated";
+
+// rent_request, rent_approved, rent_approved, rent_returned, rent_returned_confirmed

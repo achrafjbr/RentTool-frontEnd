@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileCard() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useAppSelector(
+  const { isAuthenticated, user, isLoading } = useAppSelector(
     (state) => state.authentication,
   );
   return (
@@ -56,9 +56,9 @@ export default function ProfileCard() {
             </div>
           </div>
           <div
-            onClick={() => {
-              dispatch(logout());
-              navigate(RoutePath.SIGNINPAGE);
+            onClick={async () => {
+              navigate(RoutePath.GUESTPAGE);
+              await dispatch(logout());
             }}
             className=" cursor-pointer flex gap-1 items-center justify-center"
           >

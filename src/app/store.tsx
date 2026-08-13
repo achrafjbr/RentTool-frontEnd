@@ -3,8 +3,8 @@ import authReducer from "../features/auth/authSlice";
 import toolReducer from "../features/tool/toolSlice";
 import toolReviewReducer from "../features/reviews/toolReviews/toolReviewSlice";
 import userReviewReducer from "../features/reviews/userReviews/userReviewSlice";
-
 import profileReducer from "../features/profile/profileSlice";
+import notificationReducer from "../features/notification/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +13,14 @@ export const store = configureStore({
     toolReview: toolReviewReducer,
     profile: profileReducer,
     userReview: userReviewReducer,
+    notification: notificationReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActionPaths: ["meta.arg"],
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

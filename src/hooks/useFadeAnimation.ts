@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export type FadeAnimationProps = {
   paddingTop: string;
@@ -8,6 +9,8 @@ export const useFadeAnimation = ({
   paddingTop,
   opacity,
 }: FadeAnimationProps) => {
+  const location = useLocation();
+
   const [animation, setAnimation] = useState({
     paddingTop: paddingTop,
     opacity: opacity,
@@ -25,6 +28,6 @@ export const useFadeAnimation = ({
     return () => {
       clearTimeout(timer);
     };
-  }, [paddingTop, opacity]);
+  }, [paddingTop, opacity, location.pathname]);
   return animation;
 };

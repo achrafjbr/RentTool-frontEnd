@@ -19,12 +19,14 @@ export const authSlice = createSlice({
   name: "authentication",
   reducers: {
     logout: (state) => {
+      state.isLoading = true;
       state.user = null;
       state.token = "";
       state.isAuthenticated = false;
       deleteToken();
       socket.disconnect();
       socket.auth = {};
+      state.isLoading = false;
     },
   },
   extraReducers(builder) {

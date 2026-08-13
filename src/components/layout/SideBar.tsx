@@ -4,12 +4,29 @@ import { guestLinks } from "../common/Auth_Guest/GuestLinks";
 import NavigationBar from "../common/NavigationBar";
 import { RoutePath } from "../../routes/routes";
 import ProfileCard from "../ProfileCard";
-import { useAppSelector } from "../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
+import { useEffect } from "react";
+import { unReadNotification } from "../../features/notification/notificationThunks";
+import Loader from "../common/Loader";
 
 function SideBar() {
-  const { isAuthenticated, user } = useAppSelector(
-    (state) => state.authentication,
+  const {
+    isLoading: authLoading,
+    isAuthenticated,
+    user,
+  } = useAppSelector((state) => state.authentication);
+
+  const dispatch = useAppDispatch();
+
+  const { unReadNotificationCount, isLoading } = useAppSelector(
+    (state) => state.notification,
   );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(unReadNotification());
+    }
+  }, [dispatch]);
 
   const links = isAuthenticated ? authLinks : guestLinks;
   return (
@@ -17,6 +34,8 @@ function SideBar() {
       className="bg-[#ffffff] shadow sm:h-full
        flex flex-wrap flex-col p-5 sm:p-5 "
     >
+      {isLoading || (authLoading && <Loader />)}
+
       {/* logo */}
       <div className="flex items-center gap-x-2 text-black">
         <div>LOGO</div>
@@ -36,7 +55,12 @@ function SideBar() {
           <NavigationBar
             key={link.path}
             {...link}
-            data={link.path == RoutePath.NOTIFICATIONPAGE ? "2" : undefined}
+            data={
+              link.path == RoutePath.NOTIFICATIONPAGE &&
+              unReadNotificationCount > 0 &&
+              unReadNotificationCount
+              // link.path == RoutePath.NOTIFICATIONPAGE && 1
+            }
           />
         ))}
       </div>

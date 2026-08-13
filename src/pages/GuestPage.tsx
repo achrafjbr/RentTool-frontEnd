@@ -93,15 +93,6 @@ export default function GuestPage() {
             projets.
           </div>
           <Divider padding="sm:pt-8 pt-5" />
-
-          <ToolButton
-            onclick={() => navigate(RoutePath.ADDTOOLPAGE)}
-            prefix={false}
-            title="Proposer un outil"
-            style="p-2 rounded-md w-fit flex justify-center 
-          items-center gap-x-1.5 text-sm sm:text-base cursor-pointer bg-white text-black"
-            icon={<ArrowRight />}
-          />
         </div>
 
         <Divider padding="sm:pt-8 pt-5" />
