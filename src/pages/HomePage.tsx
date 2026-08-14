@@ -77,7 +77,7 @@ export default function HomePage() {
     <div className="">
       {isLoading && <Loader />}
       {error && toast.error(error.message)}
-      <div className="sm:pl-13 pl-8 sm:pt-10 w-[95%]">
+      <div className="sm:pl-13 pl-8 sm:pt-10 w-[95%] ">
         <div className=" bg-linear-to-br from-gray-500 to-gray-400 p-5 rounded-2xl ">
           <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight leading-tight">
             Louez le bon outil,
@@ -99,8 +99,9 @@ export default function HomePage() {
             onclick={() => navigate(RoutePath.ADDTOOLPAGE)}
             prefix={false}
             title="Proposer un outil"
-            style="p-2 rounded-md w-fit flex justify-center 
-          items-center gap-x-1.5 text-sm sm:text-base cursor-pointer bg-white text-black"
+            style="p-2 rounded-lg w-fit flex justify-center 
+            translate-all duration-500 hover:-translate-y-0.5
+          items-center gap-x-1.5 text-xs sm:text-base cursor-pointer bg-white text-black"
             icon={<ArrowRight />}
           />
         </div>
