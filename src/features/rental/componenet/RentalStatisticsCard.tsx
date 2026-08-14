@@ -1,4 +1,3 @@
-import { ShieldCheck } from "lucide-react";
 import type React from "react";
 
 export type RentalCardProps = {
@@ -9,7 +8,7 @@ export type RentalCardProps = {
   iconBackgroundColor: string;
   borderIconColor: string;
 };
-function RentalCard({
+function RentalStatisticsCard({
   data,
   title,
   icon,
@@ -38,4 +37,4 @@ function RentalCard({
   );
 }
 
-export default RentalCard;
+export default RentalStatisticsCard;

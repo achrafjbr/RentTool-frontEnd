@@ -1,16 +1,10 @@
-import {
-  BadgeCheck,
-  Clock11,
-  Plus,
-  RefreshCcwDot,
-  ShieldCheck,
-  TrendingUp,
-  Wrench,
-} from "lucide-react";
-import RentalCard from "../../features/rental/componenet/RentalCard";
+import { Clock11, Plus, RefreshCcwDot, TrendingUp, Wrench } from "lucide-react";
 import { RoutePath } from "../../routes/routes";
 import ToolButton from "../../features/tool/componenets/ToolButton";
 import { useNavigate } from "react-router-dom";
+import RentalStatisticsCard from "../../features/rental/componenet/RentalStatisticsCard";
+import OwnerTabs from "../../features/rental/componenet/owner/OwnerTabs";
+import Divider from "../../components/common/Divider";
 
 export default function OwnerSpacePage() {
   const navigate = useNavigate();
@@ -37,7 +31,7 @@ export default function OwnerSpacePage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-        <RentalCard
+        <RentalStatisticsCard
           title="Mes Outils"
           data={5}
           icon={<Wrench size-25 className={`text-blue-400`} />}
@@ -46,7 +40,7 @@ export default function OwnerSpacePage() {
           iconBackgroundColor="bg-blue-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="Demandes Reçues"
           data={1}
           icon={<Clock11 size-25 className={`text-amber-400`} />}
@@ -55,7 +49,7 @@ export default function OwnerSpacePage() {
           iconBackgroundColor="bg-amber-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="Retours à Confirmer"
           data={0}
           icon={<RefreshCcwDot size-25 className={`text-purple-400`} />}
@@ -64,7 +58,7 @@ export default function OwnerSpacePage() {
           iconBackgroundColor="bg-purple-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="Gains Estimés"
           data={2}
           icon={<TrendingUp size-25 className={`text-green-400`} />}
@@ -73,6 +67,9 @@ export default function OwnerSpacePage() {
           iconBackgroundColor="bg-green-400/10"
         />
       </div>
+      <Divider padding="pt-1" />
+      {/* Tabs */}
+      <OwnerTabs />
     </div>
   );
 }

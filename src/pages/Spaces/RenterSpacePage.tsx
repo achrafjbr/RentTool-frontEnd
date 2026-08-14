@@ -5,10 +5,12 @@ import {
   ShieldCheck,
   Wrench,
 } from "lucide-react";
-import RentalCard from "../../features/rental/componenet/RentalCard";
 import ToolButton from "../../features/tool/componenets/ToolButton";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../../routes/routes";
+import RenterTabs from "../../features/rental/componenet/renter/RenterTabs";
+import RentalStatisticsCard from "../../features/rental/componenet/RentalStatisticsCard";
+import Divider from "../../components/common/Divider";
 
 export default function RenterSpacePage() {
   const navigate = useNavigate();
@@ -34,8 +36,9 @@ export default function RenterSpacePage() {
         />
       </div>
 
+      {/* RentalCards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
-        <RentalCard
+        <RentalStatisticsCard
           title="Total Demandes"
           data={5}
           icon={<Wrench size-25 className={`text-blue-400`} />}
@@ -44,7 +47,7 @@ export default function RenterSpacePage() {
           iconBackgroundColor="bg-blue-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="Locations Actives"
           data={1}
           icon={<BadgeCheck size-25 className={`text-green-400`} />}
@@ -53,7 +56,7 @@ export default function RenterSpacePage() {
           iconBackgroundColor="bg-green-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="En attente"
           data={0}
           icon={<Clock11 size-25 className={`text-amber-400`} />}
@@ -62,7 +65,7 @@ export default function RenterSpacePage() {
           iconBackgroundColor="bg-amber-400/10"
         />
 
-        <RentalCard
+        <RentalStatisticsCard
           title="Locations Terminées"
           data={2}
           icon={<ShieldCheck size-25 className={`text-purple-400`} />}
@@ -71,6 +74,10 @@ export default function RenterSpacePage() {
           iconBackgroundColor="bg-purple-400/10"
         />
       </div>
+      <Divider padding="pt-1" />
+
+      {/* Tabs */}
+      <RenterTabs />
     </div>
   );
 }
