@@ -15,12 +15,9 @@ import type { FailureResponse } from "../../types/failureResoponse";
 // Locataire / Renter
 export const renteTool = createAsyncThunk(
   "rent/tool",
-  async (
-    { toolId, startDate, endDate }: RentToolParams,
-    { rejectWithValue },
-  ) => {
+  async ({ tool, startDate, endDate }: RentToolParams, { rejectWithValue }) => {
     try {
-      return await renteToolApi({ toolId, startDate, endDate });
+      return await renteToolApi({ tool, startDate, endDate });
     } catch (error) {
       throw rejectWithValue(error as FailureResponse);
     }

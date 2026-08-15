@@ -24,6 +24,7 @@ export default function OwnerTabs() {
       >
         {renterTabs.map(({ label, name }) => (
           <p
+            key={name}
             onClick={() => setTabActive(name)}
             className={`text-xs font-semibold capitalize px-8 py-3 tracking-wider cursor-pointer ${
               tabActive === name

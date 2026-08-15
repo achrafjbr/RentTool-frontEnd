@@ -1,3 +1,5 @@
+import type { State } from "../../types/State";
+
 export enum RentalStatus {
   PENDING = "PENDING",
   APPROVED = "APPROVED",
@@ -21,8 +23,8 @@ export interface RentalTool {
 
 export interface Rental {
   _id: string;
-  renter: RentalUser;
-  owner: RentalUser;
+  renter?: RentalUser;
+  owner?: RentalUser;
   tool: RentalTool;
   rentalStatus: RentalStatus;
   totalPrice: number;
@@ -32,7 +34,23 @@ export interface Rental {
 }
 
 export type RentToolParams = {
-  toolId: string;
+  tool: string;
   startDate: string;
   endDate: string;
 };
+
+export interface RentalRenterState extends State {
+  renterRentals: Rental[];
+  totalRequests: number;
+  activeRentals: Rental[];
+  pendingRequests: number;
+  completedRequests: number;
+}
+
+export interface RentalOwnerState extends State {
+  ownerRentals: Rental[];
+  toolsCount: number;
+  receivedRequests: number;
+  returnedRequests: number;
+  gains: number;
+}

@@ -7,3 +7,7 @@ export function numberRentalDays(startDate: Date, endDate: Date) {
 
   return rentDays;
 }
+
+export const dateConvertor = (date: string) => {
+  return date.split("T")[0];
+};

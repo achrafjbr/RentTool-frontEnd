@@ -5,14 +5,14 @@ import type { Rental, RentToolParams } from "./rentalTypes";
 
 // Locataire / Renter
 export const renteToolApi = async ({
-  toolId,
+  tool,
   startDate,
   endDate,
 }: RentToolParams) => {
   try {
     return (
-      await api.post<SuccessResponse<Rental>>("/rental", {
-        toolId,
+      await api.post<SuccessResponse<Rental>>("/rental/", {
+        tool,
         startDate,
         endDate,
       })

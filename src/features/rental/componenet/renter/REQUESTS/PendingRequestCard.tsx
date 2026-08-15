@@ -1,14 +1,16 @@
 import { Clock11 } from "lucide-react";
-import tool from "../../../../../assets/charaf.jpg";
-export default function PendingRequestCard() {
+import type { Rental } from "../../../rentalTypes";
+import { useNavigate } from "react-router-dom";
+import { dateConvertor, numberRentalDays } from "../../../../../utilis/dates";
+export default function PendingRequestCard({ rental }: { rental: Rental }) {
+  const navigate = useNavigate();
   return (
     <div className="rounded-lg shadow hover:shadow-md p-5 border border-gray-100">
       <div className="grid grid-cols-12 gap-2.5 ">
         <div className="col-span-1 rounded-md ">
           <img
-            // src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${user!.picture}`}
-            src={tool}
-            alt={"user!.picture"}
+            src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental.tool.image}`}
+            alt={rental.tool.image}
             className="size-15 rounded-xl shadow-md object-cover"
           />
         </div>
@@ -20,21 +22,20 @@ export default function PendingRequestCard() {
             En attente
           </p>
           <p className="text-sm font-bold tracking-wider capitalize text-black">
-            Scie Circulaire Bosch Professional GKS 190
+            {rental.tool.name}
           </p>
           <div className="flex items-center gap-3">
             <p className="text-gray-500 text-xs font-light">Propriétaire :</p>
             <span
-              onClick={() => {
-                console.log("go to profile...");
-              }}
+              onClick={() => navigate(`/profile/${rental.owner?._id}`)}
               className="text-blue-500 text-xs font-bold cursor-pointer hover:underline"
             >
-              Thomas Bernard
+              {rental.owner?.fullName}
             </span>
             <span>•</span>
             <span className="text-gray-500 text-xs">
-              2026-07-22 au 2026-07-24 (2j)
+              {`${dateConvertor(rental.startDate)} au ${dateConvertor(rental.endDate)} 
+              (${numberRentalDays(new Date(rental.startDate), new Date(rental.endDate))})`}
             </span>
           </div>
         </div>
@@ -42,7 +43,7 @@ export default function PendingRequestCard() {
           <p className="uppercase text-xs text-gray-500 font-semibold">
             Montant total
           </p>
-          <span className="text-xl font-black text-black">40 €</span>
+          <span className="text-xl font-black text-black">{`${rental.totalPrice} €`}</span>
           <div
             className="w-fit text-amber-600 bg-amber-400/10 border 
           border-amber-200 rounded-md p-0.5 px-2 flex items-center gap-2"

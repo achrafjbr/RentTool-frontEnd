@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../../../../routes/routes";
 import Divider from "../../../../components/common/Divider";
 import AprovedActiveRequstCard from "./REQUESTS/AprovedActiveRequstCard";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
 
 export default function ActiveRentals() {
+  const { activeRentals } = useAppSelector((state) => state.renter);
   return (
     <div>
       <div className=" flex justify-between items-center gap-0.5">
         <p className="font-semibold text-lg tracking-wider text-gray-400">
-          Locations en cours (0)
+          {` Locations en cours (${activeRentals.length})`}
         </p>
         <p className="text-gray-400 text-xs">
           Déclarez la restitution de vos outils une fois votre travail terminé
@@ -18,9 +20,13 @@ export default function ActiveRentals() {
       </div>
 
       <Divider padding="pt-5" />
-      <AprovedActiveRequstCard />
-      {/* If there's no approved request found i'll apply this componenet. */}
-      {/* <NoRequestFound /> */}
+      {activeRentals.length > 0 ? (
+        activeRentals.map((rental) => (
+          <AprovedActiveRequstCard rental={rental} />
+        ))
+      ) : (
+        <NoRequestFound />
+      )}
     </div>
   );
 }
@@ -31,7 +37,7 @@ export function NoRequestFound() {
     <div className="w-full p-20 rounded-md border border-gray-200 border-dashed shadow">
       <div className="flex justify-center flex-col items-center gap-3.5">
         <div className="border-green-100 p-3 rounded-full bg-green-400/10 ">
-          <Wrench size-25 className={`text-green-400`} />
+          <Wrench className={`text-green-400`} />
         </div>
         <p className="font-semibold text-xs text-center">
           Aucune location active actuellement

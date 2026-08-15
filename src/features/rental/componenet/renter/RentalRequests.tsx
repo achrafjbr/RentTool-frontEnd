@@ -4,25 +4,37 @@ import PendingRequestCard from "./REQUESTS/PendingRequestCard";
 import ApprovedRequestCard from "./REQUESTS/ApprovedRequestCard";
 import RejectedRequestCard from "./REQUESTS/RejectedRequestCard";
 import CompletedRequestCard from "./REQUESTS/CompletedRequestCard";
+import { useAppSelector } from "../../../../hooks/reduxHooks";
+import { RentalStatus } from "../../rentalTypes";
 
 export default function RentalRequests() {
+  const { renterRentals } = useAppSelector((state) => state.renter);
   return (
     <div>
       <div className=" flex justify-between items-center gap-0.5">
         <p className="font-semibold text-lg tracking-wider text-gray-400">
-          Historique complet des demandes (3)
+          {`Historique complet des demandes (${renterRentals.length})`}
         </p>
       </div>
       <Divider padding="pt-5" />
-      {/* REQUESTS : rejected, approved, completed, */}
-      <div className=" flex flex-col items-center gap-y-5">
-        <PendingRequestCard />
-        <ApprovedRequestCard />
-        <RejectedRequestCard />
-        <CompletedRequestCard />
-      </div>
-      {/* If there's no approved request found i'll apply this componenet. */}
-      {/* <NoLocationFound /> */}
+      {/* REQUESTS : pending,rejected, approved, completed, */}
+      {renterRentals.length > 0 ? (
+        <div className=" flex flex-col items-center gap-y-5">
+          {renterRentals.map((rental) => {
+            if (rental.rentalStatus == RentalStatus.PENDING) {
+              return <PendingRequestCard key={rental._id} rental={rental} />;
+            } else if (rental.rentalStatus == RentalStatus.APPROVED) {
+              return <ApprovedRequestCard key={rental._id} rental={rental} />;
+            } else if (rental.rentalStatus == RentalStatus.REJECTED) {
+              return <RejectedRequestCard key={rental._id} rental={rental} />;
+            } else {
+              return <CompletedRequestCard rental={rental} />;
+            }
+          })}
+        </div>
+      ) : (
+        <NoLocationFound />
+      )}
     </div>
   );
 }

@@ -34,7 +34,7 @@ export default function OwnerSpacePage() {
         <RentalStatisticsCard
           title="Mes Outils"
           data={5}
-          icon={<Wrench size-25 className={`text-blue-400`} />}
+          icon={<Wrench className={`text-blue-400`} />}
           dataColor="text-blue-500"
           borderIconColor="border-blue-100"
           iconBackgroundColor="bg-blue-400/10"
@@ -43,7 +43,7 @@ export default function OwnerSpacePage() {
         <RentalStatisticsCard
           title="Demandes Reçues"
           data={1}
-          icon={<Clock11 size-25 className={`text-amber-400`} />}
+          icon={<Clock11 className={`text-amber-400`} />}
           dataColor="text-amber-500"
           borderIconColor="border-amber-100"
           iconBackgroundColor="bg-amber-400/10"
@@ -52,7 +52,7 @@ export default function OwnerSpacePage() {
         <RentalStatisticsCard
           title="Retours à Confirmer"
           data={0}
-          icon={<RefreshCcwDot size-25 className={`text-purple-400`} />}
+          icon={<RefreshCcwDot className={`text-purple-400`} />}
           dataColor="text-purple-500"
           borderIconColor="border-purple-100"
           iconBackgroundColor="bg-purple-400/10"
@@ -61,7 +61,7 @@ export default function OwnerSpacePage() {
         <RentalStatisticsCard
           title="Gains Estimés"
           data={2}
-          icon={<TrendingUp size-25 className={`text-green-400`} />}
+          icon={<TrendingUp className={`text-green-400`} />}
           dataColor="text-green-500"
           borderIconColor="border-green-100"
           iconBackgroundColor="bg-green-400/10"
