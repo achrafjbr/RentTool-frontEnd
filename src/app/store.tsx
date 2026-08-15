@@ -6,6 +6,8 @@ import userReviewReducer from "../features/reviews/userReviews/userReviewSlice";
 import profileReducer from "../features/profile/profileSlice";
 import notificationReducer from "../features/notification/notificationSlice";
 import renterReducer from "../features/rental/rentalSlices/renterSlice";
+import ownerReducer from "../features/rental/rentalSlices/ownerSlice";
+
 export const store = configureStore({
   reducer: {
     authentication: authReducer,
@@ -15,6 +17,7 @@ export const store = configureStore({
     userReview: userReviewReducer,
     notification: notificationReducer,
     renter: renterReducer,
+    owner: ownerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

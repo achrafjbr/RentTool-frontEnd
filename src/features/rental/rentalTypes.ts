@@ -50,7 +50,7 @@ export interface RentalRenterState extends State {
 export interface RentalOwnerState extends State {
   ownerRentals: Rental[];
   toolsCount: number;
-  receivedRequests: number;
-  returnedRequests: number;
-  gains: number;
+  receivedRentalRequests: Rental[];
+  returnedRentalRequests: Rental[];
+  gains: number | any;
 }
