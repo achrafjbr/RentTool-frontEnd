@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { RentalStatus, type RentalOwnerState } from "../rentalTypes";
 import {
   approveRentRequest,
@@ -99,5 +99,22 @@ export const ownerSlice = createSlice({
       });
   },
 });
+
+export const selectOwnerRentals = (state: RentalOwnerState) =>
+  state.ownerRentals;
+
+export const selectReceivedRentalRequests = createSelector(
+  [selectOwnerRentals],
+  (rentals) =>
+    rentals.filter((rental) => rental.rentalStatus == RentalStatus.PENDING),
+);
+
+export const selectReturnedRentalRequests = createSelector(
+  [selectOwnerRentals],
+  (rentals) =>
+    rentals.filter(
+      (rental) => rental.rentalStatus == RentalStatus.RETURN_REQUESTED,
+    ),
+);
 
 export default ownerSlice.reducer;
