@@ -1,8 +1,11 @@
 import { Calendar } from "lucide-react";
 import Divider from "../../../../components/common/Divider";
 import PendingOwnerRequestCard from "./REQUESTS/PendingOwnerRequestCard";
+import { selectReceivedRentalRequests } from "../../rentalSlices/ownerSlice";
+import { useSelector } from "react-redux";
 
 export default function RequestsReceived() {
+  const receivedRentalRequests = useSelector(selectReceivedRentalRequests);
   return (
     <div>
       <p className="font-semibold text-lg tracking-wider text-gray-400">
@@ -10,8 +13,13 @@ export default function RequestsReceived() {
       </p>
 
       <Divider padding="pt-5" />
-      {/* <PendingOwnerRequestCard rental={} /> */}
-      <NoRentalRequestFound />
+      {receivedRentalRequests.length == 0 ? (
+        <NoRentalRequestFound />
+      ) : (
+        receivedRentalRequests.map((rental) => (
+          <PendingOwnerRequestCard key={rental._id} rental={rental} />
+        ))
+      )}
     </div>
   );
 }

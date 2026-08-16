@@ -1,5 +1,9 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { RentalStatus, type RentalOwnerState } from "../rentalTypes";
+import {
+  RentalStatus,
+  type Rental,
+  type RentalOwnerState,
+} from "../rentalTypes";
 import {
   approveRentRequest,
   confirmReturnRentRequest,
@@ -8,20 +12,32 @@ import {
   rejectRentRequest,
 } from "../rentalThunks";
 import type { FailureResponse } from "../../../types/failureResoponse";
+import { removeExecitedRental } from "../../../utilis/owner";
+import type { RootState } from "../../../app/store";
 
 const initialState: RentalOwnerState = {
   isLoading: false,
   error: null,
   ownerRentals: [],
   toolsCount: 0,
-  receivedRentalRequests: [],
-  returnedRentalRequests: [],
-  gains: 0,
+  // receivedRentalRequests: [],
+  // returnedRentalRequests: [],
+  gains: { totalRevenue: 0 },
 };
 export const ownerSlice = createSlice({
   name: "owner/space",
   initialState,
-  reducers: {},
+  reducers: {
+    incomingOwnerRentalRequests: (state, action) => {
+      const rental = action.payload as Rental;
+      if (
+        rental.rentalStatus == RentalStatus.PENDING ||
+        rental.rentalStatus == RentalStatus.RETURN_REQUESTED
+      ) {
+        state.ownerRentals.push(rental);
+      }
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(getRequestsReceivedByOwner.pending, (state) => {
@@ -31,19 +47,19 @@ export const ownerSlice = createSlice({
         state.isLoading = false;
         const rentals = action.payload.data;
         state.ownerRentals = rentals;
-        for (const rental of rentals) {
-          switch (rental.rentalStatus) {
-            case RentalStatus.PENDING:
-              state.receivedRentalRequests.unshift(rental);
-              break;
-            case RentalStatus.RETURN_REQUESTED:
-              state.returnedRentalRequests.unshift(rental);
-              break;
+        // for (const rental of rentals) {
+        //   switch (rental.rentalStatus) {
+        //     case RentalStatus.PENDING:
+        //       state.receivedRentalRequests.unshift(rental);
+        //       break;
+        //     case RentalStatus.RETURN_REQUESTED:
+        //       state.returnedRentalRequests.unshift(rental);
+        //       break;
 
-            default:
-              break;
-          }
-        }
+        //     default:
+        //       break;
+        //   }
+        // }
       })
       .addCase(getRequestsReceivedByOwner.rejected, (state, action) => {
         state.isLoading = false;
@@ -56,6 +72,7 @@ export const ownerSlice = createSlice({
       .addCase(approveRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
         const rental = action.payload.data;
+        removeExecitedRental(state, rental);
       })
       .addCase(approveRentRequest.rejected, (state, action) => {
         state.isLoading = false;
@@ -67,19 +84,22 @@ export const ownerSlice = createSlice({
       })
       .addCase(rejectRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
-        const rentals = action.payload.data;
-        // i'll delete the rejected rental.
+        const rental = action.payload.data;
+        removeExecitedRental(state, rental);
       })
       .addCase(rejectRentRequest.rejected, (state, action) => {
         state.isLoading = false;
         action.error = action.payload as FailureResponse;
-      }) //Confirm return of rental to be completed.
+      })
+      //Confirm return of rental to be completed.
       .addCase(confirmReturnRentRequest.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(confirmReturnRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
-        const rentals = action.payload.data;
+        const rental = action.payload.data;
+        state.gains.totalRevenue += rental.totalPrice;
+        removeExecitedRental(state, rental);
       })
       .addCase(confirmReturnRentRequest.rejected, (state, action) => {
         state.isLoading = false;
@@ -100,8 +120,8 @@ export const ownerSlice = createSlice({
   },
 });
 
-export const selectOwnerRentals = (state: RentalOwnerState) =>
-  state.ownerRentals;
+export const selectOwnerRentals = (state: RootState) =>
+  state.owner.ownerRentals;
 
 export const selectReceivedRentalRequests = createSelector(
   [selectOwnerRentals],
@@ -118,3 +138,4 @@ export const selectReturnedRentalRequests = createSelector(
 );
 
 export default ownerSlice.reducer;
+export const { incomingOwnerRentalRequests } = ownerSlice.actions;

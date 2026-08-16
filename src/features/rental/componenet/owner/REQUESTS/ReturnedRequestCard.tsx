@@ -3,6 +3,7 @@ import type { Rental } from "../../../rentalTypes";
 import { useAppDispatch } from "../../../../../hooks/reduxHooks";
 import { CircleCheck, MessageCircle, RotateCcw } from "lucide-react";
 import { dateConvertor, numberRentalDays } from "../../../../../utilis/dates";
+import { confirmReturnRentRequest } from "../../../rentalThunks";
 
 export default function ReturnedRequestCard({ rental }: { rental: Rental }) {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export default function ReturnedRequestCard({ rental }: { rental: Rental }) {
       <div className="grid grid-cols-12 gap-2.5 ">
         <div className="col-span-1 rounded-md ">
           <img
-            src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${rental!.tool.image}`}
+            src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental!.tool.image}`}
             alt={"user!.picture"}
             className="size-15 rounded-xl shadow-md object-cover"
           />
@@ -54,7 +55,7 @@ export default function ReturnedRequestCard({ rental }: { rental: Rental }) {
       <div className="flex items-center justify-end gap-3.5 ml-auto w-full">
         {/* contact btn */}
         <div
-          onClick={() => console.log("contact")}
+          onClick={() => dispatch(confirmReturnRentRequest(rental._id))}
           className="w-fit cursor-pointer bg-green-400/10 border border-green-100 rounded-xl py-1.5 px-5 
           flex items-center gap-2"
         >

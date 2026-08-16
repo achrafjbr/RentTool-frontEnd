@@ -3,6 +3,7 @@ import type { Rental } from "../../../rentalTypes";
 import { useNavigate } from "react-router-dom";
 import { dateConvertor, numberRentalDays } from "../../../../../utilis/dates";
 import { useAppDispatch } from "../../../../../hooks/reduxHooks";
+import { approveRentRequest, rejectRentRequest } from "../../../rentalThunks";
 export default function PendingOwnerRequestCard({
   rental,
 }: {
@@ -10,21 +11,33 @@ export default function PendingOwnerRequestCard({
 }) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
+  console.log("rental", rental);
   return (
     <div className="rounded-lg shadow hover:shadow-md p-5 border border-gray-100">
       <div className="grid grid-cols-12 gap-2.5 ">
         <div className="col-span-1 rounded-md ">
-          <img
-            src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${rental!.tool.image}`}
-            alt={"user!.picture"}
-            className="size-15 rounded-xl shadow-md object-cover"
-          />
+          <div className="relative h-full">
+            {rental.renter?.picture && (
+              <div className="absolute bottom-0 right-0 border border-green-500 ">
+                <img
+                  src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${rental!.renter?.picture}`}
+                  alt={"img"}
+                  className=" size-10 rounded-full shadow-md object-cover"
+                />
+              </div>
+            )}
+
+            <img
+              src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental!.tool.image}`}
+              alt={"user!.picture"}
+              className=" size-15 rounded-xl shadow-md object-cover"
+            />
+          </div>
         </div>
         <div className="col-span-8">
           <div
             className="rounded-md p-0.5 px-2 w-fit
-             bg-green-400/10 border border-green-200 flex items-center gap-x-1.5"
+             bg-amber-400/10 border border-amber-200 flex items-center gap-x-1.5"
           >
             <CircleCheck size={16} className="text-amber-500" />
             <p className="text-xs font-semibold text-amber-600">En attente</p>
@@ -58,24 +71,22 @@ export default function PendingOwnerRequestCard({
       <div className="flex items-center justify-end gap-3.5 ml-auto w-full">
         {/* refuse btn */}
         <div
-          onClick={() => console.log("refuse")}
+          onClick={() => dispatch(rejectRentRequest(rental._id))}
           className="w-fit cursor-pointer bg-red-400/10 rounded-xl py-1.5 px-5 
           flex items-center gap-2"
         >
-          <X size={18} className="text-white" />
-          <p className="text-xs font-semibold text-red-500">
-            J'ai rendu l'outil
-          </p>
+          <X size={18} className="text-red-600" />
+          <p className="text-xs font-semibold text-red-500">Refuser</p>
         </div>
 
         {/* accept btn */}
         <div
-          onClick={() => console.log("accept")}
+          onClick={() => dispatch(approveRentRequest(rental._id))}
           className="w-fit cursor-pointer bg-green-400 rounded-xl 
           py-1.5 px-5 flex items-center gap-2"
         >
           <Check size={18} className="text-white" />
-          <p className="text-xs font-semibold text-white">Contacter</p>
+          <p className="text-xs font-semibold text-white">Approver</p>
         </div>
       </div>
     </div>

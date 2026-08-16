@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RentalStatus, type RentalRenterState } from "../rentalTypes";
+import {
+  RentalStatus,
+  type Rental,
+  type RentalRenterState,
+} from "../rentalTypes";
 import {
   getRequestsSentByRenter,
   renteTool,
@@ -21,9 +25,19 @@ export const renterSlice = createSlice({
   initialState,
   reducers: {
     // i'll use it with socket.
-    incomingRentalsToRenter: (state, action) => {
-      const rental = action.payload.data;
-      state.renterRentals.unshift(rental);
+    incomingRenterRentalRequests: (state, action) => {
+      const rental = action.payload as Rental;
+      state.renterRentals = state.renterRentals.filter((crental) =>
+        crental._id === rental._id ? rental : crental,
+      );
+      if (rental.rentalStatus == RentalStatus.APPROVED) {
+        state.renterRentals = state.activeRentals.filter((crental) =>
+          crental._id === rental._id ? rental : crental,
+        );
+      }
+      if (rental.rentalStatus === RentalStatus.COMPLETED) {
+        state.completedRequests++;
+      }
     },
   },
   extraReducers(builder) {
@@ -43,8 +57,7 @@ export const renterSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as FailureResponse;
       })
-
-      // requests sent by the [renter]
+      // Get requests sent by the [renter]
       .addCase(getRequestsSentByRenter.pending, (state) => {
         state.isLoading = true;
       })
@@ -83,7 +96,7 @@ export const renterSlice = createSlice({
       .addCase(returnRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
         const rental = action.payload.data;
-        // dispear approved request from these lists.
+        // dispear returned request from these lists.
         state.renterRentals = state.renterRentals.filter((rent) => {
           rent._id !== rental._id;
         });
@@ -99,4 +112,4 @@ export const renterSlice = createSlice({
 });
 
 export default renterSlice.reducer;
-export const { incomingRentalsToRenter } = renterSlice.actions;
+export const { incomingRenterRentalRequests } = renterSlice.actions;

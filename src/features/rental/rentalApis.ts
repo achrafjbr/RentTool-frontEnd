@@ -94,7 +94,7 @@ export const confirmReturnRentRequestApi = async (rentalId: string) => {
 export const ownerGainsApi = async () => {
   try {
     const response = (
-      await api.patch<SuccessResponse<{ totalRevenue: any }>>(`/rental/gains`)
+      await api.get<SuccessResponse<{ totalRevenue: number }>>(`/rental/gains`)
     ).data;
     return response;
   } catch (error) {

@@ -16,7 +16,7 @@ export default function NotificationPage() {
   useEffect(() => {
     dispatch(myNotification());
   }, [dispatch]);
-  useSocketWsEvents();
+  // useSocketWsEvents();
 
   return (
     <div className="relative">

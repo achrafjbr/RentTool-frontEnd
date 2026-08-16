@@ -5,6 +5,7 @@ import { useFadeAnimation } from "../../hooks/useFadeAnimation";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { RoutePath } from "../../routes/routes";
 import { motion } from "motion/react";
+import { useSocketWsEvents } from "../../hooks/useSocket";
 
 function AppLayout() {
   const { isAuthenticated } = useAppSelector((state) => state.authentication);
@@ -12,6 +13,8 @@ function AppLayout() {
   //   paddingTop: "pt-50",
   //   opacity: "opacity-10",
   // });
+
+  useSocketWsEvents();
 
   return (
     <div className="h-screen grid grid-cols-1 sm:grid-cols-[280px_1fr]">

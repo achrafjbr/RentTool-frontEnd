@@ -12,20 +12,18 @@ import RenterTabs from "../../features/rental/componenet/renter/RenterTabs";
 import RentalStatisticsCard from "../../features/rental/componenet/RentalStatisticsCard";
 import Divider from "../../components/common/Divider";
 import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
-import { useSocketWsEvents } from "../../hooks/useSocket";
 import { useEffect } from "react";
 import { getRequestsSentByRenter } from "../../features/rental/rentalThunks";
 import Loader from "../../components/common/Loader";
 import toast from "react-hot-toast";
 
 export default function RenterSpacePage() {
-  useSocketWsEvents();
+  // useSocketWsEvents();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
     (async () => await dispatch(getRequestsSentByRenter()))();
-    // dispatch(rentalStatistics());
   }, [dispatch]);
   const {
     isLoading,

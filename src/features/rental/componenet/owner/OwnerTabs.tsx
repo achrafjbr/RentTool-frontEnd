@@ -3,16 +3,29 @@ import Divider from "../../../../components/common/Divider";
 import RequestsReceived from "./RequestsReceived";
 import RentalsAndReturns from "./RentalsAndReturns";
 import MyTools from "./MyTools";
+import { useSelector } from "react-redux";
+import {
+  selectReceivedRentalRequests,
+  selectReturnedRentalRequests,
+} from "../../rentalSlices/ownerSlice";
 
 const REQUESTS_RECEIVED = "requests received";
 const RENTALS_RETURNS = "rentals & returns";
 const MY_TOOLS = "my tools";
 
 export default function OwnerTabs() {
+  const receivedRentalRequests = useSelector(selectReceivedRentalRequests);
+  const retrunedRentalRequests = useSelector(selectReturnedRentalRequests);
   const renterTabs = [
-    { name: REQUESTS_RECEIVED, label: `demandes reçues (${2})` },
-    { name: RENTALS_RETURNS, label: `Locations & Retours (${1})` },
-    { name: MY_TOOLS, label: `mes outils (${1})` },
+    {
+      name: REQUESTS_RECEIVED,
+      label: `demandes reçues (${receivedRentalRequests.length})`,
+    },
+    {
+      name: RENTALS_RETURNS,
+      label: `Locations & Retours (${retrunedRentalRequests.length})`,
+    },
+    { name: MY_TOOLS, label: `mes outils (${0})` },
   ];
   const [tabActive, setTabActive] = useState<string>(renterTabs[0].name);
 
