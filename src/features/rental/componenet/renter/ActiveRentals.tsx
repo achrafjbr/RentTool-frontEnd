@@ -22,7 +22,7 @@ export default function ActiveRentals() {
       <Divider padding="pt-5" />
       {activeRentals.length > 0 ? (
         activeRentals.map((rental) => (
-          <AprovedActiveRequstCard rental={rental} />
+          <AprovedActiveRequstCard key={rental._id} rental={rental} />
         ))
       ) : (
         <NoRequestFound />

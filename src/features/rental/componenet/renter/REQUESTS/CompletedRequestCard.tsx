@@ -11,7 +11,7 @@ export default function CompletedRequestCard({ rental }: { rental: Rental }) {
         <div className="col-span-1 rounded-md ">
           <img
             src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental.tool.image}`}
-            alt={rental.tool.image}
+            alt={"img"}
             className="size-15 rounded-xl shadow-md object-cover"
           />
         </div>

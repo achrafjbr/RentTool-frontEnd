@@ -58,10 +58,9 @@ export const getRequestsReceivedByOwnerApi = async () => {
 
 export const approveRentRequestApi = async (rentalId: string) => {
   try {
-    const response = (
+    return (
       await api.patch<SuccessResponse<Rental>>(`/rental/${rentalId}/approve`)
     ).data;
-    return response;
   } catch (error) {
     throw error as FailureResponse;
   }

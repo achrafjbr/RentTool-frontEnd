@@ -44,7 +44,7 @@ export function NoLocationFound() {
     <div className="w-full p-20 rounded-md border border-gray-200 border-dashed shadow">
       <div className="flex justify-center flex-col items-center gap-3.5">
         <div className="border-gray-100 p-3 rounded-full bg-gray-400/10 ">
-          <Calendar size-25 className={`text-gray-400`} />
+          <Calendar className={`text-gray-400`} />
         </div>
         <p className="font-bold text-sm text-center text-gray-400">
           Aucune demande enregistrée.
