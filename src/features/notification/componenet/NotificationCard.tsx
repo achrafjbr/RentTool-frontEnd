@@ -14,6 +14,7 @@ import { markNotificationAsRead } from "../notificationThunks";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../components/common/Loader";
 import toast from "react-hot-toast";
+import { diffFiveMinuts } from "../../../utilis/dates";
 
 export default function NotificationCard({
   notification,
@@ -74,9 +75,7 @@ export default function NotificationCard({
             {notification.message}
           </p>
           <p className="text-gray-400 text-xs font-mono ">
-            {notification.createdAt == Date.now().toString()
-              ? "À l'instant"
-              : notification.createdAt.split("T")[0]}
+            {diffFiveMinuts(notification.createdAt)}
           </p>
         </div>
 

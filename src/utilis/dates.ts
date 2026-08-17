@@ -11,3 +11,10 @@ export function numberRentalDays(startDate: Date, endDate: Date) {
 export const dateConvertor = (date: string) => {
   return date.split("T")[0];
 };
+
+export const diffFiveMinuts = (dateTime: string) => {
+  const notificationMinute = dateTime.split(":")[1];
+  const currentMinute = new Date().getMinutes();
+  const diff = currentMinute - parseInt(notificationMinute);
+  return diff > 5 ? dateConvertor(dateTime) : "À l'instant";
+};

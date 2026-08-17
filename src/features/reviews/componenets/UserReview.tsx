@@ -6,6 +6,7 @@ import { deleteToolReview } from "../toolReviews/toolReviewThunks";
 import Loader from "../../../components/common/Loader";
 import type { UserReviewResponse } from "../userReviews/userReviewTypes";
 import { deleteUserReview } from "../userReviews/userReviewThunks";
+import { diffFiveMinuts } from "../../../utilis/dates";
 
 export default function UserReview({
   review,
@@ -46,7 +47,7 @@ export default function UserReview({
               {review.from?.fullName || "Utilisateur anonyme"}
             </p>
             <p className="text-gray-500 text-[10px]">
-              {review.from?.createdAt.split("T")[0]}
+              {diffFiveMinuts(review.from?.createdAt)}
             </p>
           </div>
         </div>

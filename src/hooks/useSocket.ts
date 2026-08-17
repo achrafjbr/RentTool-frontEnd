@@ -17,6 +17,7 @@ export const useSocketWsEvents = () => {
   const { user } = useAppSelector((state) => state.authentication);
   useEffect(() => {
     socket.on(NOTIFICATION, (notification: Notification) => {
+      console.log("NOtificagtion", notification);
       dispatch(addNotification(notification));
     });
     socket.on(RENTAL_CREATED, (rental: Rental) => {

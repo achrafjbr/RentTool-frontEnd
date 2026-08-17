@@ -9,19 +9,21 @@ import toast from "react-hot-toast";
 import Loader from "../../../components/common/Loader";
 import Error from "../../../components/common/Error";
 import ToolReview from "./ToolReview";
+import { useParams } from "react-router-dom";
 
 export default function ToolReviews({
   reviews,
 }: {
   reviews: ToolReviewResponse[];
 }) {
+  const { id: tool } = useParams();
+  console.log("toolid", tool);
   const [comment, setComment] = useState<string>("");
 
   const commentHandler = (
     e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>,
   ) => {
     const comment = e.target.value;
-    console.log("comment", comment);
     setComment(comment);
   };
   const addComment = async ({ review }: { review: string }) => {
@@ -29,7 +31,7 @@ export default function ToolReviews({
       toast.error("Tool should be valid...!");
     }
     review.trim();
-    await dispatch(addToolReview({ review: review, tool: reviews[0].tool }));
+    await dispatch(addToolReview({ review: review, tool: tool! }));
   };
 
   const isAuthenticated = useAppSelector(
@@ -53,12 +55,18 @@ export default function ToolReviews({
             {`Avis pour cet outil (${reviews.length})`}
           </h2>
 
-          {/* This (div) w'll hold list of reviews. */}
-          <div className="reviews space-y-6">
-            {reviews.map((review) => (
-              <ToolReview key={review._id} review={review} />
-            ))}
-          </div>
+          {reviews.length == 0 ? (
+            <div className="text-gray-400 flex justify-center items-center">
+              Y'a aucun Avis
+            </div>
+          ) : (
+            <div className="reviews space-y-6">
+              {reviews.map((review) => (
+                <ToolReview key={review._id} review={review} />
+              ))}
+            </div>
+          )}
+
           <Divider padding="sm:pt-3 pt-2" />
 
           {!isAuthenticated ? (

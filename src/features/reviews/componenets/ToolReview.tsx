@@ -5,6 +5,7 @@ import { CameraOff, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import TextField from "../../auth/components/TextField";
 import { deleteToolReview } from "../toolReviews/toolReviewThunks";
 import Loader from "../../../components/common/Loader";
+import { diffFiveMinuts } from "../../../utilis/dates";
 
 export default function ToolReview({
   review,
@@ -45,7 +46,7 @@ export default function ToolReview({
               {review.author?.fullName || "Utilisateur anonyme"}
             </p>
             <p className="text-gray-500 text-[10px]">
-              {review.author?.createdAt.split("T")[0]}
+              {diffFiveMinuts(review.author?.createdAt)}
             </p>
           </div>
         </div>

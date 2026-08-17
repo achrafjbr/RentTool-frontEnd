@@ -5,11 +5,10 @@ import type { Notification } from "./notificationTypes";
 
 export const myNotificationApi = async () => {
   try {
-    const response = (
+    const notifications = (
       await api.get<SuccessResponse<Notification[]>>("/notification/me")
     ).data;
-    console.log("response", response);
-    return response;
+    return notifications;
   } catch (error) {
     throw error as FailureResponse;
   }
@@ -21,11 +20,12 @@ export const getNotificationByIdApi = async ({
   notificationId: string;
 }) => {
   try {
-    return (
+    const notification = (
       await api.get<SuccessResponse<Notification>>(
-        `"/notification/${notificationId}"`,
+        `/notification/${notificationId}`,
       )
     ).data;
+    return notification;
   } catch (error) {
     throw error as FailureResponse;
   }

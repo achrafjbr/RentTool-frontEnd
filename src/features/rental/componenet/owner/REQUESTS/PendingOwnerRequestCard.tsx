@@ -11,14 +11,13 @@ export default function PendingOwnerRequestCard({
 }) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  console.log("rental", rental);
   return (
     <div className="rounded-lg shadow hover:shadow-md p-5 border border-gray-100">
       <div className="grid grid-cols-12 gap-2.5 ">
         <div className="col-span-1 rounded-md ">
           <div className="relative h-full">
             {rental.renter?.picture && (
-              <div className="absolute bottom-0 right-0 border border-green-500 ">
+              <div className="absolute -bottom-2 rounded-full shadow -right-1 border border-green-500/10 ">
                 <img
                   src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${rental!.renter?.picture}`}
                   alt={"img"}
