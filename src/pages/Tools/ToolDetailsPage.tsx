@@ -32,6 +32,9 @@ export default function ToolDetailsPage() {
   }, [dispatch]);
   const tool = useAppSelector((state) => state.tool);
   const toolReviews = useAppSelector((state) => state.toolReview);
+  const isAuthenticated = useAppSelector(
+    (state) => state.authentication.isAuthenticated,
+  );
 
   return (
     <div>
@@ -39,7 +42,9 @@ export default function ToolDetailsPage() {
 
       <div className="sm:pl-13 pl-8 sm:pt-10 w-[95%]">
         <div className="flex items-center gap-x-3.5">
-          <BackIcon path={RoutePath.GUESTPAGE} />
+          <BackIcon
+            path={isAuthenticated ? RoutePath.HOMEPAGE : RoutePath.GUESTPAGE}
+          />
           <div className="">
             <div className="text-gray-400 text-xs tracking-wide uppercase">
               {tool.selectedTool?.category}
