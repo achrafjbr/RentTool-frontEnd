@@ -31,15 +31,12 @@ export default function OwnerTool({
         <div className="absolute top-3 left-3">
           {toolStatus == ToolStatus.RENTED ? (
             <div
-              className="inline-flex items-center gap-x-1.5  gap-1.5 px-2.5 py-1 bg-[#ecfdf5] text-[10px] 
+              className="inline-flex items-center gap-x-1.5 gap-1.5 px-2.5 py-1 bg-red-200 text-[10px] 
             font-semibold uppercase tracking-wider shadow-sm rounded-full"
             >
-              <span className="size-2 rounded-full text-amber-700 "></span>
-              <span
-                className="bg-amber-50  border-amber-100'
-                          : 'bg-rose-50 text-rose-700 border border-rose-100' "
-              >
-                en cours
+              <span className="size-2 rounded-full bg-red-500"></span>
+              <span className="text-red-500 text-md tracking-tight leading-relaxed">
+                À loué
               </span>
             </div>
           ) : (

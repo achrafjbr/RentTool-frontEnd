@@ -24,8 +24,12 @@ export default function OwnerSpacePage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getRequestsReceivedByOwner());
-    dispatch(ownerGains());
+    try {
+      dispatch(getRequestsReceivedByOwner()).unwrap();
+      dispatch(ownerGains()).unwrap();
+    } catch (error) {
+      toast.error("quelque chose s'est mal passé");
+    }
   }, [dispatch]);
 
   const receivedRentalRequests = useSelector(selectReceivedRentalRequests);

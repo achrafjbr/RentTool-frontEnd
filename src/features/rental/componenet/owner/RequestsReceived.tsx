@@ -9,7 +9,7 @@ export default function RequestsReceived() {
   return (
     <div>
       <p className="font-semibold text-lg tracking-wider text-gray-400">
-        Demandes en attente de décision (0)
+        {`Demandes en attente de décision (${receivedRentalRequests})`}
       </p>
 
       <Divider padding="pt-5" />

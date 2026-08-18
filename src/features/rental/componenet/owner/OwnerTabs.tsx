@@ -5,6 +5,7 @@ import RentalsAndReturns from "./RentalsAndReturns";
 import MyTools from "./MyTools";
 import { useSelector } from "react-redux";
 import {
+  selectApprovedRentalRequests,
   selectReceivedRentalRequests,
   selectReturnedRentalRequests,
 } from "../../rentalSlices/ownerSlice";
@@ -16,6 +17,9 @@ const MY_TOOLS = "my tools";
 export default function OwnerTabs() {
   const receivedRentalRequests = useSelector(selectReceivedRentalRequests);
   const retrunedRentalRequests = useSelector(selectReturnedRentalRequests);
+  const approvedRentalRequests = useSelector(selectApprovedRentalRequests);
+  const approvedAndReturnedCount =
+    approvedRentalRequests.length + retrunedRentalRequests.length;
   const renterTabs = [
     {
       name: REQUESTS_RECEIVED,
@@ -23,7 +27,7 @@ export default function OwnerTabs() {
     },
     {
       name: RENTALS_RETURNS,
-      label: `Locations & Retours (${retrunedRentalRequests.length})`,
+      label: `Locations & Retours (${approvedAndReturnedCount})`,
     },
     { name: MY_TOOLS, label: `mes outils (${0})` },
   ];

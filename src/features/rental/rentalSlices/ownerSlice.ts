@@ -12,7 +12,10 @@ import {
   rejectRentRequest,
 } from "../rentalThunks";
 import type { FailureResponse } from "../../../types/failureResoponse";
-import { removeExecitedRental } from "../../../utilis/owner";
+import {
+  removeExecutedRental,
+  updateExecutedRental,
+} from "../../../utilis/owner";
 import type { RootState } from "../../../app/store";
 
 const initialState: RentalOwnerState = {
@@ -20,8 +23,6 @@ const initialState: RentalOwnerState = {
   error: null,
   ownerRentals: [],
   toolsCount: 0,
-  // receivedRentalRequests: [],
-  // returnedRentalRequests: [],
   gains: { totalRevenue: 0 },
 };
 export const ownerSlice = createSlice({
@@ -34,7 +35,8 @@ export const ownerSlice = createSlice({
         rental.rentalStatus == RentalStatus.PENDING ||
         rental.rentalStatus == RentalStatus.RETURN_REQUESTED
       ) {
-        state.ownerRentals.push(rental);
+        // state.ownerRentals.push(rental);
+        updateExecutedRental(state, rental);
       }
     },
   },
@@ -72,7 +74,8 @@ export const ownerSlice = createSlice({
       .addCase(approveRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
         const rental = action.payload.data;
-        removeExecitedRental(state, rental);
+        updateExecutedRental(state, rental);
+        // removeExecitedRental(state, rental);
       })
       .addCase(approveRentRequest.rejected, (state, action) => {
         state.isLoading = false;
@@ -85,7 +88,7 @@ export const ownerSlice = createSlice({
       .addCase(rejectRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
         const rental = action.payload.data;
-        removeExecitedRental(state, rental);
+        removeExecutedRental(state, rental);
       })
       .addCase(rejectRentRequest.rejected, (state, action) => {
         state.isLoading = false;
@@ -99,7 +102,7 @@ export const ownerSlice = createSlice({
         state.isLoading = false;
         const rental = action.payload.data;
         state.gains.totalRevenue += rental.totalPrice;
-        removeExecitedRental(state, rental);
+        removeExecutedRental(state, rental);
       })
       .addCase(confirmReturnRentRequest.rejected, (state, action) => {
         state.isLoading = false;
@@ -135,6 +138,12 @@ export const selectReturnedRentalRequests = createSelector(
     rentals.filter(
       (rental) => rental.rentalStatus == RentalStatus.RETURN_REQUESTED,
     ),
+);
+
+export const selectApprovedRentalRequests = createSelector(
+  [selectOwnerRentals],
+  (rentals) =>
+    rentals.filter((rental) => rental.rentalStatus === RentalStatus.APPROVED),
 );
 
 export default ownerSlice.reducer;

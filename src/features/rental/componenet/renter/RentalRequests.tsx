@@ -6,6 +6,7 @@ import RejectedRequestCard from "./REQUESTS/RejectedRequestCard";
 import CompletedRequestCard from "./REQUESTS/CompletedRequestCard";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { RentalStatus } from "../../rentalTypes";
+import ReturnedRequestCard from "./REQUESTS/ReturnedRequestCard";
 
 export default function RentalRequests() {
   const { renterRentals } = useAppSelector((state) => state.renter);
@@ -21,14 +22,17 @@ export default function RentalRequests() {
       {renterRentals.length > 0 ? (
         <div className=" flex flex-col items-center gap-y-5">
           {renterRentals.map((rental) => {
+            console.log("rental", rental);
             if (rental.rentalStatus == RentalStatus.PENDING) {
               return <PendingRequestCard key={rental._id} rental={rental} />;
             } else if (rental.rentalStatus == RentalStatus.APPROVED) {
               return <ApprovedRequestCard key={rental._id} rental={rental} />;
             } else if (rental.rentalStatus == RentalStatus.REJECTED) {
               return <RejectedRequestCard key={rental._id} rental={rental} />;
-            } else {
-              return <CompletedRequestCard rental={rental} />;
+            } else if (rental.rentalStatus == RentalStatus.COMPLETED) {
+              return <CompletedRequestCard key={rental._id} rental={rental} />;
+            } else if (rental.rentalStatus == RentalStatus.RETURN_REQUESTED) {
+              return <ReturnedRequestCard key={rental._id} rental={rental} />;
             }
           })}
         </div>

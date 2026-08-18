@@ -36,6 +36,9 @@ export const renterSlice = createSlice({
         );
       }
       if (rental.rentalStatus === RentalStatus.COMPLETED) {
+        state.renterRentals = state.activeRentals.filter((crental) =>
+          crental._id === rental._id ? rental : crental,
+        );
         state.completedRequests++;
       }
     },
