@@ -27,18 +27,19 @@ export const renterSlice = createSlice({
     // i'll use it with socket.
     incomingRenterRentalRequests: (state, action) => {
       const rental = action.payload as Rental;
-      state.renterRentals = state.renterRentals.filter((crental) =>
+      state.renterRentals = state.renterRentals.map((crental) =>
         crental._id === rental._id ? rental : crental,
       );
       if (rental.rentalStatus == RentalStatus.APPROVED) {
-        state.renterRentals = state.activeRentals.filter((crental) =>
-          crental._id === rental._id ? rental : crental,
-        );
+        if (state.activeRentals.length === 0) {
+          state.activeRentals.push(rental);
+        } else {
+          state.activeRentals = state.activeRentals.map((crental) =>
+            crental._id === rental._id ? rental : crental,
+          );
+        }
       }
       if (rental.rentalStatus === RentalStatus.COMPLETED) {
-        state.renterRentals = state.activeRentals.filter((crental) =>
-          crental._id === rental._id ? rental : crental,
-        );
         state.completedRequests++;
       }
     },
@@ -99,12 +100,13 @@ export const renterSlice = createSlice({
       .addCase(returnRentRequest.fulfilled, (state, action) => {
         state.isLoading = false;
         const rental = action.payload.data;
-        // dispear returned request from these lists.
-        state.renterRentals = state.renterRentals.filter((rent) => {
-          rent._id !== rental._id;
-        });
-        state.activeRentals = state.activeRentals.filter((rent) => {
-          rent._id !== rental._id;
+
+        state.renterRentals = state.renterRentals.map((crental) =>
+          crental._id == rental._id ? rental : crental,
+        );
+
+        state.activeRentals = state.activeRentals.filter((crental) => {
+          return crental._id !== rental._id;
         });
       })
       .addCase(returnRentRequest.rejected, (state, action) => {

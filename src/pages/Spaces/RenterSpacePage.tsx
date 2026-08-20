@@ -18,8 +18,6 @@ import Loader from "../../components/common/Loader";
 import toast from "react-hot-toast";
 
 export default function RenterSpacePage() {
-  // useSocketWsEvents();
-
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -33,32 +31,6 @@ export default function RenterSpacePage() {
     completedRequests,
     pendingRequests,
   } = useAppSelector((state) => state.renter);
-
-  // i'll use this solution later for enhancing the performance.
-  // const rentalStatistics = useMemo(() => {
-  //   if (renterRentals.length > 0) {
-  //     let pendingRequests = 0;
-  //     let completedRequests = 0;
-  //     for (const rental of renterRentals) {
-  //       switch (rental.rentalStatus) {
-  //         case RentalStatus.PENDING:
-  //           pendingRequests += 1;
-  //           break;
-  //         case RentalStatus.COMPLETED:
-  //           completedRequests += 1;
-  //           break;
-
-  //         default:
-  //           break;
-  //       }
-  //     }
-  //     return {
-  //       pendingRequests,
-  //       completedRequests,
-  //     };
-  //   }
-  // }, [renterRentals]);
-
   return (
     <div>
       {isLoading && <Loader />}

@@ -21,8 +21,6 @@ export const notificationSlice = createSlice({
   initialState,
   reducers: {
     addNotification: (state, action) => {
-      console.log("action.payload NOtificagtion", action.payload);
-
       state.notifications.unshift(action.payload);
       state.unReadNotificationCount += 1;
     },

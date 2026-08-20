@@ -17,7 +17,6 @@ export const updateUserProfileApi = async ({
 }: {
   profile: FormData;
 }) => {
-  console.log("profile", profile);
   try {
     return (
       await api.patch<SuccessResponse<UserProfile>>("user/profile", profile)

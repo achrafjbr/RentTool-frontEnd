@@ -1,8 +1,5 @@
-import { ArrowRight, MapPinHouse, Search } from "lucide-react";
+import { MapPinHouse, Search } from "lucide-react";
 import Divider from "../components/common/Divider";
-import ToolButton from "../features/tool/componenets/ToolButton";
-import { useNavigate } from "react-router-dom";
-import { RoutePath } from "../routes/routes";
 import TextField from "../features/auth/components/TextField";
 import { useEffect, useMemo, useState } from "react";
 import ToolCategory from "../features/tool/componenets/ToolCategory";
@@ -16,7 +13,6 @@ import { categories } from "../utilis/constants";
 import ToolCitySelect from "../features/tool/componenets/ToolCitySelect";
 
 export default function GuestPage() {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCity, setSelectedCity] = useState<string>("Toutes les villes");
   const [selectedCategory, setSelectedCategorie] = useState<string>(

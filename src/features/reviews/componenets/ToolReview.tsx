@@ -61,7 +61,7 @@ export default function ToolReview({
               name="review"
               type="text"
               onChangeHandler={() => {
-                console.log("sssssss");
+                console.log("update tool review");
               }}
               label=""
               placeHolder=""

@@ -62,7 +62,7 @@ export default function UserReview({
               name="review"
               type="text"
               onChangeHandler={() => {
-                console.log("sssssss");
+                console.log("update review");
               }}
               label=""
               placeHolder=""

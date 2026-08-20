@@ -59,7 +59,6 @@ export const markNotificationAsRead = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      console.log("notificationId", notificationId);
       return await markNotificationAsReadApi({ notificationId });
     } catch (error) {
       throw rejectWithValue(error as FailureResponse);

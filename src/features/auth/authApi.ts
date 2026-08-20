@@ -19,7 +19,6 @@ export const registerApi = async (data: SignUpParams) => {
     return response.data;
   } catch (error) {
     if (isAxiosError<FailureResponse>(error)) {
-      console.log(" error.response?.data;", error.response?.data);
       throw error.response?.data;
     } else {
       throw error;
@@ -33,7 +32,6 @@ export const loginApi = async (data: SignInParams) => {
       "/authentication/login",
       data,
     );
-    console.log("response.data", response.data);
     return response.data;
   } catch (error) {
     if (isAxiosError<FailureResponse>(error)) {

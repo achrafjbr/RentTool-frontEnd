@@ -16,8 +16,6 @@ export const getUserById = createAsyncThunk(
 export const updateUserProfile = createAsyncThunk(
   "update/profile",
   async (profile: FormData, { rejectWithValue }) => {
-    console.log(Object.fromEntries(profile.entries()));
-
     try {
       return await updateUserProfileApi({ profile: profile });
     } catch (error) {

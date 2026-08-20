@@ -22,7 +22,6 @@ export default function RentalRequests() {
       {renterRentals.length > 0 ? (
         <div className=" flex flex-col items-center gap-y-5">
           {renterRentals.map((rental) => {
-            console.log("rental", rental);
             if (rental.rentalStatus == RentalStatus.PENDING) {
               return <PendingRequestCard key={rental._id} rental={rental} />;
             } else if (rental.rentalStatus == RentalStatus.APPROVED) {

@@ -17,11 +17,11 @@ export const useSocketWsEvents = () => {
   const { user } = useAppSelector((state) => state.authentication);
   useEffect(() => {
     socket.on(NOTIFICATION, (notification: Notification) => {
-      console.log("NOtificagtion", notification);
       dispatch(addNotification(notification));
     });
     socket.on(RENTAL_CREATED, (rental: Rental) => {
-      console.log("notification owner rental---->", rental);
+      if (rental.owner?._id == user?._id)
+        dispatch(incomingOwnerRentalRequests(rental));
     });
     socket.on(RENTAL_UPDATED, (rental: Rental) => {
       if (rental.owner?._id == user?._id) {

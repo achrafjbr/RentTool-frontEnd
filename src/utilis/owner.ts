@@ -14,7 +14,11 @@ export const updateExecutedRental = (
   state: RentalOwnerState,
   rental: Rental,
 ) => {
-  state.ownerRentals = state.ownerRentals.map((crental) =>
-    crental._id == rental._id ? rental : crental,
-  );
+  if (state.ownerRentals.length == 0) {
+    state.ownerRentals.push(rental);
+  } else {
+    state.ownerRentals = state.ownerRentals.map((crental) =>
+      crental._id == rental._id ? rental : crental,
+    );
+  }
 };

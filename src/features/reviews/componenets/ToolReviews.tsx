@@ -17,7 +17,6 @@ export default function ToolReviews({
   reviews: ToolReviewResponse[];
 }) {
   const { id: tool } = useParams();
-  console.log("toolid", tool);
   const [comment, setComment] = useState<string>("");
 
   const commentHandler = (
