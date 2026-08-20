@@ -12,6 +12,7 @@ import RenterSpacePage from "../pages/Spaces/RenterSpacePage";
 import NotificationPage from "../pages/NotificationPage";
 import AddToolPage from "../pages/Tools/AddToolPage";
 import GuestPage from "../pages/GuestPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export default function AppRouter() {
   return (
@@ -47,6 +48,8 @@ export default function AppRouter() {
           />
           <Route path={RoutePath.PROFILEPAGE} element={<ProfilePage />} />
         </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
