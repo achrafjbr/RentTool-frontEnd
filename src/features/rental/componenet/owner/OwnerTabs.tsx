@@ -43,10 +43,10 @@ export default function OwnerTabs() {
           <p
             key={name}
             onClick={() => setTabActive(name)}
-            className={`text-xs font-semibold capitalize px-8 py-3 tracking-wider cursor-pointer ${
+            className={`text-xs font-semibold capitalize rounded-xl px-8 py-3 tracking-wider cursor-pointer ${
               tabActive === name
-                ? "text-white bg-black rounded-2xl"
-                : "text-gray-500  "
+                ? "text-white duration-500 bg-black "
+                : "text-gray-500"
             } `}
           >
             {label}
@@ -54,7 +54,7 @@ export default function OwnerTabs() {
         ))}
       </div>
       <Divider padding="pt-5" />
-      <div className="text-gray-600">
+      <div className={`text-gray-600  `}>
         {tabActive === REQUESTS_RECEIVED ? (
           <RequestsReceived />
         ) : tabActive === RENTALS_RETURNS ? (

@@ -1,3 +1,4 @@
+import { stagger } from "motion/react";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -30,4 +31,23 @@ export const useFadeAnimation = ({
     };
   }, [paddingTop, opacity, location.pathname]);
   return animation;
+};
+
+export const toolContainerAnimation = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delayChildren: stagger(0.3, {
+        ease: "easeInOut",
+        from: "last",
+      }),
+    },
+  },
+};
+
+export const toolChildAnimation = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 },
 };

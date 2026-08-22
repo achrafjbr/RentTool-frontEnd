@@ -7,11 +7,19 @@ import CompletedRequestCard from "./REQUESTS/CompletedRequestCard";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
 import { RentalStatus } from "../../rentalTypes";
 import ReturnedRequestCard from "./REQUESTS/ReturnedRequestCard";
+import { motion } from "motion/react";
 
 export default function RentalRequests() {
   const { renterRentals } = useAppSelector((state) => state.renter);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        ease: "backInOut",
+      }}
+    >
       <div className=" flex justify-between items-center gap-0.5">
         <p className="font-semibold text-lg tracking-wider text-gray-400">
           {`Historique complet des demandes (${renterRentals.length})`}
@@ -38,7 +46,7 @@ export default function RentalRequests() {
       ) : (
         <NoLocationFound />
       )}
-    </div>
+    </motion.div>
   );
 }
 

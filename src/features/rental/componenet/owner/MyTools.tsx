@@ -1,16 +1,23 @@
 import { Calendar } from "lucide-react";
 import Divider from "../../../../components/common/Divider";
-
+import { motion } from "motion/react";
 export default function MyTools() {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        ease: "backInOut",
+      }}
+    >
       <p className="font-semibold text-lg tracking-wider text-gray-400">
         Mes outils mis en location (1)
       </p>
 
       <Divider padding="pt-5" />
       <NoToolFound />
-    </div>
+    </motion.div>
   );
 }
 

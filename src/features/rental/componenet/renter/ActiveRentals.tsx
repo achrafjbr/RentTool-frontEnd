@@ -5,11 +5,18 @@ import { RoutePath } from "../../../../routes/routes";
 import Divider from "../../../../components/common/Divider";
 import AprovedActiveRequstCard from "./REQUESTS/AprovedActiveRequstCard";
 import { useAppSelector } from "../../../../hooks/reduxHooks";
-
+import { motion } from "motion/react";
 export default function ActiveRentals() {
   const { activeRentals } = useAppSelector((state) => state.renter);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        ease: "backInOut",
+      }}
+    >
       <div className=" flex justify-between items-center gap-0.5">
         <p className="font-semibold text-lg tracking-wider text-gray-400">
           {` Locations en cours (${activeRentals.length})`}
@@ -27,7 +34,7 @@ export default function ActiveRentals() {
       ) : (
         <NoRequestFound />
       )}
-    </div>
+    </motion.div>
   );
 }
 

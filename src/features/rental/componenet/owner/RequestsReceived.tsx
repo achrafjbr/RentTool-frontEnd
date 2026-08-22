@@ -3,11 +3,19 @@ import Divider from "../../../../components/common/Divider";
 import PendingOwnerRequestCard from "./REQUESTS/PendingOwnerRequestCard";
 import { selectReceivedRentalRequests } from "../../rentalSlices/ownerSlice";
 import { useSelector } from "react-redux";
+import { motion } from "motion/react";
 
 export default function RequestsReceived() {
   const receivedRentalRequests = useSelector(selectReceivedRentalRequests);
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        ease: "backInOut",
+      }}
+    >
       <p className="font-semibold text-lg tracking-wider text-gray-400">
         {`Demandes en attente de décision (${receivedRentalRequests.length})`}
       </p>
@@ -20,7 +28,7 @@ export default function RequestsReceived() {
           <PendingOwnerRequestCard key={rental._id} rental={rental} />
         ))
       )}
-    </div>
+    </motion.div>
   );
 }
 

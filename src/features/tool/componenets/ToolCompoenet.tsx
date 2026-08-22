@@ -3,6 +3,8 @@ import Divider from "../../../components/common/Divider";
 import { MapPin } from "lucide-react";
 import ToolButton from "./ToolButton";
 import { useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
+import { toolChildAnimation } from "../../../hooks/useFadeAnimation";
 export default function ToolCompoenet({
   description,
   name,
@@ -15,7 +17,8 @@ export default function ToolCompoenet({
 }: Tool) {
   const navigate = useNavigate();
   return (
-    <div
+    <motion.div
+      variants={toolChildAnimation}
       className="bg-white rounded-2xl border border-gray-100
          hover:border-gray-200/80 shadow-sm hover:shadow-md
           transition-all overflow-hidden flex flex-col group"
@@ -103,6 +106,6 @@ export default function ToolCompoenet({
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

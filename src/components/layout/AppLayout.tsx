@@ -24,17 +24,16 @@ function AppLayout() {
       {isAuthenticated ? (
         <motion.main
           initial={{
-            paddingTop: "12.5rem",
-            opacity: "10%",
-            translate: "all ease-in-out 200ms",
+            y: "12.5rem",
+            opacity: 0,
           }}
-          animate={{ paddingTop: "5rem", opacity: "100%" }}
+          animate={{ y: "5rem", opacity: 1 }}
           transition={{
-            duration: 200,
-            ease: "circInOut",
+            duration: 0.25,
+            ease: "easeInOut",
             animation: { bounce: 2 },
           }}
-          exit={{ opacity: "10%", paddingTop: "12.5rem" }}
+          exit={{ opacity: 0, y: "12.5rem" }}
           className={`sm:overflow-y-auto  transition-all 
           ease-in-out duration-100 `}
         >

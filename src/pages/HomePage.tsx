@@ -14,7 +14,8 @@ import type { FailureResponse } from "../types/failureResoponse";
 import toast from "react-hot-toast";
 import { categories } from "../utilis/constants";
 import ToolCitySelect from "../features/tool/componenets/ToolCitySelect";
-
+import { motion } from "motion/react";
+import { toolContainerAnimation } from "../hooks/useFadeAnimation";
 export default function HomePage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -195,7 +196,13 @@ export default function HomePage() {
         <Divider padding="sm:pt-8 pt-5" />
 
         {/* tools area */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={toolContainerAnimation}
+          layout
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {filterSearch.length === 0
             ? tools.map((tool) => (
                 <ToolCompoenet
@@ -225,7 +232,7 @@ export default function HomePage() {
                   _id={tool._id}
                 />
               ))}
-        </div>
+        </motion.div>
         <Divider padding="sm:pt-8 pt-5" />
       </div>
     </div>
