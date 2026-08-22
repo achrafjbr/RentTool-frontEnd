@@ -6,6 +6,7 @@ import { useAppDispatch } from "./hooks/reduxHooks";
 import { getToken } from "./utilis/tokenService";
 import { me } from "./features/auth/authThunk";
 import { socket } from "./config/socket";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -57,7 +58,9 @@ function App() {
           },
         }}
       />
-      <AppRouter />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </div>
   );
 }

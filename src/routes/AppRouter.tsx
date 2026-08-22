@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import SignInPage from "../pages/Auth/SignInPage";
 import SignUpPage from "../pages/Auth/SignUpPage";
 import AppLayout from "../components/layout/AppLayout";
@@ -13,11 +13,13 @@ import NotificationPage from "../pages/NotificationPage";
 import AddToolPage from "../pages/Tools/AddToolPage";
 import GuestPage from "../pages/GuestPage";
 import NotFoundPage from "../pages/NotFoundPage";
+import { AnimatePresence } from "motion/react";
 
 export default function AppRouter() {
+  const location = useLocation();
   return (
-    <BrowserRouter>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         <Route element={<AppLayout />}>
           <Route path={RoutePath.HOMEPAGE} element={<HomePage />} />
           <Route
@@ -51,6 +53,6 @@ export default function AppRouter() {
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </AnimatePresence>
   );
 }

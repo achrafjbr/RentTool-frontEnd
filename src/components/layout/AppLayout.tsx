@@ -4,7 +4,7 @@ import Divider from "../common/Divider";
 import { useFadeAnimation } from "../../hooks/useFadeAnimation";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { RoutePath } from "../../routes/routes";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useSocketWsEvents } from "../../hooks/useSocket";
 
 function AppLayout() {
@@ -23,12 +23,18 @@ function AppLayout() {
       </aside>
       {isAuthenticated ? (
         <motion.main
-          animate={{ paddingTop: "5rem", opacity: "100%" }}
           initial={{
             paddingTop: "12.5rem",
             opacity: "10%",
-            translate: "all ease-in-out 200ms ",
+            translate: "all ease-in-out 200ms",
           }}
+          animate={{ paddingTop: "5rem", opacity: "100%" }}
+          transition={{
+            duration: 200,
+            ease: "circInOut",
+            animation: { bounce: 2 },
+          }}
+          exit={{ opacity: "10%", paddingTop: "12.5rem" }}
           className={`sm:overflow-y-auto  transition-all 
           ease-in-out duration-100 `}
         >
