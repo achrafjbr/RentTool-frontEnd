@@ -9,6 +9,7 @@ export interface UserProfile {
   picture?: string;
   bio?: string;
   city?: string;
+  picturePublicId?: string;
 }
 
 export interface UserProfileState extends State {

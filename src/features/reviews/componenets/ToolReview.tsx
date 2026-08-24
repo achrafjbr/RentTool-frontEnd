@@ -35,7 +35,7 @@ export default function ToolReview({
             <CameraOff className="size-10 border border-gray-400 object-cover rounded-full" />
           ) : (
             <img
-              src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${review.author.picture}`}
+              src={review.author.picture}
               alt={review.author.fullName || "User avatar"}
               className="size-10 border border-gray-400 object-cover  rounded-full"
             />

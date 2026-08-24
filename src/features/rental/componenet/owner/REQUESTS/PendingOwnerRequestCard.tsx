@@ -19,7 +19,7 @@ export default function PendingOwnerRequestCard({
             {rental.renter?.picture && (
               <div className="absolute -bottom-2 rounded-full shadow -right-1 border border-green-500/10 ">
                 <img
-                  src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${rental!.renter?.picture}`}
+                  src={rental!.renter?.picture}
                   alt={"img"}
                   className=" size-10 rounded-full shadow-md object-cover"
                 />
@@ -27,7 +27,7 @@ export default function PendingOwnerRequestCard({
             )}
 
             <img
-              src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental!.tool.image}`}
+              src={rental!.tool.image}
               alt={"user!.picture"}
               className=" size-15 rounded-xl shadow-md object-cover"
             />

@@ -10,7 +10,7 @@ export default function ReturnedRequestCard({ rental }: { rental: Rental }) {
       <div className="grid grid-cols-12 gap-2.5 ">
         <div className="col-span-1 rounded-md ">
           <img
-            src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${rental!.tool.image}`}
+            src={rental!.tool.image}
             alt={"user!.picture"}
             className="size-15 rounded-xl shadow-md object-cover"
           />

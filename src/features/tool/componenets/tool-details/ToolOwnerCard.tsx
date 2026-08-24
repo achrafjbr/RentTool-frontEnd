@@ -19,7 +19,7 @@ export default function ToolOwnerCard({ owner }: { owner?: Owner }) {
             <CameraOff className="size-16 rounded-full" />
           ) : (
             <img
-              src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${owner!.picture}`}
+              src={owner!.picture}
               alt={owner!.picture}
               className="size-16 rounded-full"
             />

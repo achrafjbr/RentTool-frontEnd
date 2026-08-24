@@ -31,7 +31,7 @@ export default function ProfileCard() {
               <CameraOffIcon color="black" className="size-11 rounded-full" />
             ) : (
               <img
-                src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${user!.picture}`}
+                src={user!.picture}
                 alt={user!.picture}
                 className="size-11 rounded-full"
               />

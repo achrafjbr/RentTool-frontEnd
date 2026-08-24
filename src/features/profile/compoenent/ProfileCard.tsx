@@ -49,7 +49,7 @@ export default function ProfileCard({
               <CameraOff className="size-24 rounded-full" />
             ) : (
               <img
-                src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${profile!.picture}`}
+                src={profile!.picture}
                 alt={profile!.picture}
                 className="size-24 object-cover textc rounded-full"
               />

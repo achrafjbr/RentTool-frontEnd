@@ -23,7 +23,7 @@ export default function OwnerTool({
       <div className="relative aspect-video bg-gray-100 overflow-hidden shrink-0">
         {/* image */}
         <img
-          src={`${import.meta.env.VITE_SERVER_URL}/uploads/tools/${image}`}
+          src={image}
           alt={image}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
