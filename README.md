@@ -261,9 +261,7 @@ A complete application demo video :
 
 ![Alt text](./src/assets/screenshots/renter.png)
 
-## Video
-
-![Watch the video](./src/assets/screenshots/githubRentoolvideo.webm)
+[![Watch the video](https://youtu.be/c4RoSWdzVvM?si=1HtkuDpc25_TDEzw)](https://youtu.be/c4RoSWdzVvM?si=1HtkuDpc25_TDEzw)
 
 The demo will showcase the main workflow:
 
