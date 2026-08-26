@@ -114,7 +114,7 @@ export default function NotificationCard({
             >
               {notification.sender?.picture ? (
                 <img
-                  src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${notification.sender.picture}`}
+                  src={notification.sender.picture}
                   alt={notification.createdAt}
                   className=" cursor-pointer size-9 rounded-full"
                 />

@@ -1,3 +1,4 @@
+import { isAxiosError } from "axios";
 import { api } from "../../config/axios";
 import type { FailureResponse } from "../../types/failureResoponse";
 import type { SuccessResponse } from "../../types/successResponse";
@@ -10,7 +11,12 @@ export const myNotificationApi = async () => {
     ).data;
     return notifications;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      console.log("NOtifications:", error);
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -27,7 +33,11 @@ export const getNotificationByIdApi = async ({
     ).data;
     return notification;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -36,7 +46,11 @@ export const unReadNotificationApi = async () => {
     return (await api.get<SuccessResponse<number>>("/notification/un-read"))
       .data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -54,7 +68,11 @@ export const markNotificationAsReadApi = async ({
     console.log("ui response", response);
     return response;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -63,6 +81,10 @@ export const markAllNotificationAsReadApi = async () => {
     return (await api.patch<SuccessResponse<number>>("/notification/read-all"))
       .data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };

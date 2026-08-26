@@ -59,7 +59,11 @@ export default function ToolDetailsPage() {
 
         <div className="grid gap-x-7 gap-y-10 text-black grid-cols-1 lg:grid-cols-7">
           <div className="lg:col-span-4 flex flex-col gap-4">
-            <ToolImage image={tool.selectedTool?.image} />
+            {tool.isLoading ? (
+              <Loader />
+            ) : (
+              <ToolImage image={tool.selectedTool?.image} />
+            )}
             <ToolDescription
               category={tool.selectedTool?.category}
               city={tool.selectedTool?.owner.city}

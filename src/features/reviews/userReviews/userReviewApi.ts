@@ -1,3 +1,4 @@
+import { isAxiosError } from "axios";
 import { api } from "../../../config/axios";
 import type { FailureResponse } from "../../../types/failureResoponse";
 import type { SuccessResponse } from "../../../types/successResponse";
@@ -13,7 +14,11 @@ export const addUserReviewApi = async (data: UserReviewParams) => {
       await api.post<SuccessResponse<UserReviewResponse>>("/review/user", data)
     ).data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -25,7 +30,11 @@ export const getUserReviewsApi = async (userId: string) => {
       )
     ).data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -41,7 +50,11 @@ export const updateUserReviewApi = async ({
       )
     ).data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -53,6 +66,10 @@ export const deleteUserReviewApi = async (userId: string) => {
       )
     ).data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };

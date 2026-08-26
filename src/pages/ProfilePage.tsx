@@ -47,9 +47,9 @@ export default function ProfilePage() {
 
   return (
     <div>
-      {profile.isLoading ||
-        tool.isLoading ||
-        (userReview.isLoading && <Loader />)}
+      {profile.isLoading && <Loader />}
+      {tool.isLoading && <Loader />}
+      {userReview.isLoading && <Loader />}
       <div className="text-black sm:pl-13 pl-8 sm:pt-10 w-[95%]">
         <div className="flex items-center justify-between ">
           <BackIcon path={back} />

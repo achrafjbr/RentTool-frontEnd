@@ -1,3 +1,4 @@
+import { isAxiosError } from "axios";
 import { api } from "../../config/axios";
 import type { FailureResponse } from "../../types/failureResoponse";
 import type { SuccessResponse } from "../../types/successResponse";
@@ -8,7 +9,11 @@ export const publishToolApi = async (tool: FormData) => {
     return (await api.post<SuccessResponse<Tool>>("/tool/publish_tool", tool))
       .data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -17,7 +22,11 @@ export const getToolByIdApi = async ({ toolId }: { toolId: string }) => {
     const response = await api.get<SuccessResponse<Tool>>(`/tool/${toolId}`);
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 export const deleteToolApi = async ({ toolId }: { toolId: string }) => {
@@ -25,7 +34,11 @@ export const deleteToolApi = async ({ toolId }: { toolId: string }) => {
     const response = await api.delete<SuccessResponse<Tool>>(`/tool/${toolId}`);
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 export const getAllToolsApi = async () => {
@@ -34,7 +47,11 @@ export const getAllToolsApi = async () => {
     const response = await api.get<SuccessResponse<Tool[]>>(`/tool`);
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 export const myToolsApi = async (userId: string) => {
@@ -44,7 +61,11 @@ export const myToolsApi = async (userId: string) => {
     );
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 // get all tools excluding the coonneted user(current user)-> i'll use it in home page.
@@ -54,7 +75,11 @@ export const getAllToolsWithOwnersApi = async () => {
       await api.get<SuccessResponse<Tool[]>>(`/tool/owner/tools`);
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -63,6 +88,10 @@ export const getToolCitiesApi = async () => {
     const response = await api.get<SuccessResponse<string[]>>("/tool/cities");
     return response.data;
   } catch (error) {
-    throw error as FailureResponse;
+    if (isAxiosError<FailureResponse>(error)) {
+      throw error.response?.data ?? { message: error.message };
+    } else {
+      throw error;
+    }
   }
 };

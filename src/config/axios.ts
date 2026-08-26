@@ -14,11 +14,11 @@ api.interceptors.request.use((config) => {
   return config;
 });
 // const disptch = useAppDispatch();
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.data.status == 401) {
-      // disptch(logout());
-    }
-  },
-);
+// api.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response?.data.status == 401) {
+//       // disptch(logout());
+//     }
+//   },
+// );

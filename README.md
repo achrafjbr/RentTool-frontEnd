@@ -1,77 +1,320 @@
-# React + TypeScript + Vite
+# RentTool Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for a tool rental platform built with **React, TypeScript, Redux Toolkit, and Socket.IO**.
 
-Currently, two official plugins are available:
+RentTool allows users to browse and manage rental tools, send and manage rental requests, receive real-time notifications, manage their profiles, and review tools and users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+### 🔐 Authentication
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- User registration and login
+- Authentication state management
+- Protected application routes
+- Token-based authentication
+- Guest and authenticated navigation
 
-Note: This will impact Vite dev & build performances.
+### 🛠️ Tool Management
 
-## Expanding the ESLint configuration
+- Browse available tools
+- Search and filter tools
+- Filter tools by category and city
+- View detailed tool information
+- Add tools
+- Manage owned tools
+- View tool owner information
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 🤝 Rental Management
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+The application provides different rental workflows for **renters** and **owners**.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+#### Renter
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Send rental requests
+- View pending requests
+- View approved requests
+- Track active rentals
+- View completed rentals
+- View rejected requests
+- View returned rentals
 
+#### Owner
+
+- View owned tools
+- Receive rental requests
+- Approve or reject requests
+- Track active rentals
+- Manage returns
+- View rental statistics
+
+### 🔔 Real-Time Notifications
+
+The application uses **Socket.IO** for real-time communication.
+
+Users can receive real-time updates without manually refreshing the application.
+
+### 👤 Profile Management
+
+- View user profiles
+- Update profile information
+- View owned tools
+- View user reviews
+
+### ⭐ Reviews
+
+The application supports two review systems:
+
+- Tool reviews
+- User reviews
+
+Users can view and manage reviews associated with tools and users.
+
+## 🛠️ Tech Stack
+
+- **React**
+- **TypeScript**
+- **Redux Toolkit**
+- **React Router**
+- **Axios**
+- **Socket.IO Client**
+- **CSS**
+
+## 🏗️ Frontend Architecture
+
+The project follows a feature-based architecture.
+
+```text
+src/
+├── app/
+│   ├── provider.tsx
+│   └── store.tsx
+│
+├── components/
+│   ├── common/
+│   └── layout/
+│
+├── config/
+│   ├── axios.ts
+│   └── socket.ts
+│
+├── features/
+│   ├── auth/
+│   ├── notification/
+│   ├── profile/
+│   ├── rental/
+│   ├── reviews/
+│   └── tool/
+│
+├── hooks/
+├── pages/
+├── routes/
+├── types/
+└── utilis/
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Each major application feature is isolated inside its own directory.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+For example:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+features/
+└── rental/
+    ├── components/
+    ├── rentalApis.ts
+    ├── rentalSlices/
+    ├── rentalThunks.ts
+    └── rentalTypes.ts
 ```
+
+This keeps API logic, Redux state, asynchronous actions, types, and UI components organized by feature.
+
+## 🔄 State Management
+
+The application uses **Redux Toolkit** for global state management.
+
+Feature-specific state is separated into dedicated slices, including:
+
+- Authentication
+- Tools
+- Rentals
+- Notifications
+- Profiles
+- Tool reviews
+- User reviews
+
+Asynchronous operations are handled through Redux thunks.
+
+## 🔌 API Integration
+
+The frontend communicates with the backend through REST APIs using **Axios**.
+
+API logic is organized inside individual feature modules:
+
+```text
+features/
+├── auth/
+│   └── authApi.ts
+├── tool/
+│   └── toolApi.ts
+├── rental/
+│   └── rentalApis.ts
+├── profile/
+│   └── profileApis.ts
+├── notification/
+│   └── notificationApis.ts
+└── reviews/
+```
+
+## ⚡ Real-Time Communication
+
+Real-time communication is handled through **Socket.IO Client**.
+
+The frontend includes:
+
+- Socket configuration
+- Socket hook
+- Real-time notification handling
+- Integration with the application's notification system
+
+```text
+config/
+└── socket.ts
+
+hooks/
+└── useSocket.ts
+```
+
+## 🧭 Routing
+
+Application routing is organized using dedicated route configuration:
+
+```text
+routes/
+├── AppRouter.tsx
+└── routes.ts
+```
+
+The application includes separate pages for:
+
+- Authentication
+- Home
+- Tools
+- Tool details
+- Notifications
+- Profile
+- Owner space
+- Renter space
+- Adding tools
+- Not found pages
+
+## 🎨 UI Structure
+
+Reusable UI components are separated from feature-specific components.
+
+```text
+components/
+├── common/
+└── layout/
+```
+
+Feature-specific UI components are located inside their corresponding feature:
+
+```text
+features/
+├── auth/components/
+├── rental/components/
+├── reviews/components/
+└── tool/components/
+```
+
+## 📸 Screenshots
+
+Screenshots will be added soon.
+
+The project includes screenshots demonstrating the main application interfaces and user workflows.
+
+## 🎥 Demo
+
+A complete application demo video will be added soon.
+
+The demo will showcase the main workflow:
+
+```text
+Authentication
+      ↓
+Browse Tools
+      ↓
+View Tool Details
+      ↓
+Send Rental Request
+      ↓
+Owner Receives Request
+      ↓
+Rental Management
+      ↓
+Real-Time Notifications
+```
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+
+cd rentTool-frontend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will then be available through the local development server.
+
+## 🔗 Backend
+
+This frontend application communicates with the RentTool backend API.
+
+Backend repository:
+
+**RentTool Backend:**
+https://github.com/achrafjbr/rentTool-backend
+
+## 📌 Project Highlights
+
+This project demonstrates experience with:
+
+- React application architecture
+- TypeScript
+- Feature-based frontend architecture
+- Redux Toolkit state management
+- REST API integration
+- Axios
+- Socket.IO real-time communication
+- Authentication flows
+- Role-based user experiences
+- Rental workflow management
+- Reusable React components
+- Asynchronous state management
+- Tool search and filtering
+- Reviews and notifications
+
+## 👨‍💻 Author
+
+**Achraf El jabbar**
+
+Frontend & Backend Developer focused on:
+
+**React · TypeScript · NestJS · Node.js · MongoDB**
+
+GitHub:
+
+https://github.com/achrafjbr

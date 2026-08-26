@@ -3,9 +3,10 @@ import TextField from "../../auth/components/TextField";
 import ProfileButton from "./ProfileButton";
 import type { UserProfile } from "../profileTypes";
 import { useState } from "react";
-import { useAppDispatch } from "../../../hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { updateUserProfile } from "../profileThunks";
 import { me } from "../../auth/authThunk";
+import Loader from "../../../components/common/Loader";
 export interface ProfileState {
   fullName: string;
   phone: string;
@@ -44,6 +45,7 @@ export default function ProfileMofication({
 
   const dispatch = useAppDispatch();
 
+  const { isLoading } = useAppSelector((state) => state.profile);
   return (
     <div
       className=" bg-white p-4  rounded-2xl border 
@@ -130,33 +132,37 @@ export default function ProfileMofication({
           />
 
           {/* save modifications. */}
-          <ProfileButton
-            prefix={true}
-            title="Enregistrer"
-            style="rounded-lg text-white bg-blue-500 flex justify-center
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <ProfileButton
+              prefix={true}
+              title="Enregistrer"
+              style="rounded-lg text-white bg-blue-500 flex justify-center
              items-center p-2 text-xs gap-1.5"
-            icon={<Check size={18} className="text-white" />}
-            onclick={async () => {
-              // check if required fields are existed such as : (fullName, phone)
+              icon={<Check size={18} className="text-white" />}
+              onclick={async () => {
+                // check if required fields are existed such as : (fullName, phone)
 
-              const formData = new FormData();
-              formData.append("fullName", newProfile.fullName);
-              formData.append("phone", newProfile.phone);
-              if (newProfile.city) {
-                formData.append("city", newProfile.city);
-              }
-              if (newProfile.bio) {
-                formData.append("bio", newProfile.bio);
-              }
-              if (newProfile.picture && newProfile.picture instanceof File) {
-                formData.append("picture", newProfile.picture);
-              }
-              await dispatch(updateUserProfile(formData));
-              await dispatch(me());
+                const formData = new FormData();
+                formData.append("fullName", newProfile.fullName);
+                formData.append("phone", newProfile.phone);
+                if (newProfile.city) {
+                  formData.append("city", newProfile.city);
+                }
+                if (newProfile.bio) {
+                  formData.append("bio", newProfile.bio);
+                }
+                if (newProfile.picture && newProfile.picture instanceof File) {
+                  formData.append("picture", newProfile.picture);
+                }
+                await dispatch(updateUserProfile(formData));
+                await dispatch(me());
 
-              onclick();
-            }}
-          />
+                onclick();
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

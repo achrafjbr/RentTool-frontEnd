@@ -16,10 +16,11 @@ export const registerApi = async (data: SignUpParams) => {
       "/authentication/register",
       data,
     );
+
     return response.data;
   } catch (error) {
     if (isAxiosError<FailureResponse>(error)) {
-      throw error.response?.data;
+      throw error.response?.data ?? { message: error.message };
     } else {
       throw error;
     }

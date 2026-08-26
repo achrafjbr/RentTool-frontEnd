@@ -36,7 +36,7 @@ export default function UserReview({
             <CameraOff className="size-10 border border-gray-400 object-cover rounded-full" />
           ) : (
             <img
-              src={`${import.meta.env.VITE_SERVER_URL}/uploads/users/${review.from.picture}`}
+              src={review.from.picture}
               alt={review.from.fullName || "User avatar"}
               className="size-10 border border-gray-400 object-cover  rounded-full"
             />
@@ -47,7 +47,7 @@ export default function UserReview({
               {review.from?.fullName || "Utilisateur anonyme"}
             </p>
             <p className="text-gray-500 text-[10px]">
-              {diffFiveMinuts(review.from?.createdAt)}
+              {diffFiveMinuts(review.createdAt)}
             </p>
           </div>
         </div>
