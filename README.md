@@ -235,7 +235,35 @@ The project includes screenshots demonstrating the main application interfaces a
 
 ## 🎥 Demo
 
-A complete application demo video will be added soon.
+A complete application demo video :
+
+## Home
+
+![Alt text](./src/assets/screenshots/home.png)
+
+## Notifications
+
+![Alt text](./src/assets/screenshots/notification.png)
+
+## Tool
+
+![Alt text](./src/assets/screenshots/tool.png)
+
+## Profile
+
+![Alt text](./src/assets/screenshots/user.png)
+
+## Owner space
+
+![Alt text](./src/assets/screenshots/owner.png)
+
+## Renter space
+
+![Alt text](./src/assets/screenshots/renter.png)
+
+## Video
+
+![Watch the video](./src/assets/screenshots/githubRentoolvideo.webm)
 
 The demo will showcase the main workflow:
 
@@ -260,7 +288,7 @@ Real-Time Notifications
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/achrafjbr/RentTool-frontEnd
 
 cd rentTool-frontend
 ```
