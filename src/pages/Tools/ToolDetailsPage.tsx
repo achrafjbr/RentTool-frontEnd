@@ -68,6 +68,7 @@ export default function ToolDetailsPage() {
               category={tool.selectedTool?.category}
               city={tool.selectedTool?.owner.city}
               description={tool.selectedTool?.description}
+              depositAmount={tool.selectedTool?.depositAmount}
             />
             <ToolReviews
               reviews={

@@ -2,8 +2,10 @@ import { Award, CameraOff, MessageSquare, Phone } from "lucide-react";
 import ContactCard from "./ContactCard";
 import type { Owner } from "../../toolTypes";
 import { useNavigate } from "react-router-dom";
+import { whatsAppContact } from "../../../../utilis/contact";
 
 export default function ToolOwnerCard({ owner }: { owner?: Owner }) {
+  console.log("phone", owner?.phone);
   const navigate = useNavigate();
   return (
     <div
@@ -42,18 +44,14 @@ export default function ToolOwnerCard({ owner }: { owner?: Owner }) {
 
         <div className="ml-auto space-y-2">
           <ContactCard
-            onClick={() => {
-              console.log("Appeler");
-            }}
+            onClick={() => owner?.phone && whatsAppContact(owner?.phone)}
             title="Appeler"
             bgColor="bg-gray-50"
             textColor="text-gray-400"
             icon={<Phone size={15} className="text-gray-500" />}
           />
           <ContactCard
-            onClick={() => {
-              console.log("WhatsApp");
-            }}
+            onClick={() => owner?.phone && whatsAppContact(owner?.phone)}
             title="WhatsApp"
             bgColor="bg-emerald-50"
             textColor="text-emerald-500"

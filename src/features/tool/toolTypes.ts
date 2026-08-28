@@ -10,6 +10,7 @@ export interface Owner {
   city: string;
   picture?: string;
   createdAt: string;
+  phone: string;
 }
 export interface Tool {
   _id: string;

@@ -4,10 +4,12 @@ export default function ToolDescription({
   category,
   city,
   description,
+  depositAmount,
 }: {
   description?: string;
   city?: string;
   category?: string;
+  depositAmount?: number;
 }) {
   return (
     <div
@@ -40,6 +42,13 @@ export default function ToolDescription({
             <span className="text-gray-400">Caution</span>
             <span className="font-semibold text-gray-800 mt-1">
               Dépôt de garantie requis
+            </span>
+          </div>
+
+          <div className="bg-gray-50/50 p-3 rounded-xl border border-gray-100/50 flex flex-col justify-between">
+            <span className="text-gray-400">Garantie</span>
+            <span className="font-semibold text-gray-800 mt-1">
+              {`${depositAmount} €`}
             </span>
           </div>
         </div>
