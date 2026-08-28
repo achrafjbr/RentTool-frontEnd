@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/reduxHooks";
 import { useEffect } from "react";
 import { unReadNotification } from "../../features/notification/notificationThunks";
 import Loader from "../common/Loader";
-
+import logo from "../../assets/logo.png";
 function SideBar() {
   const {
     isLoading: authLoading,
@@ -18,8 +18,11 @@ function SideBar() {
 
   const dispatch = useAppDispatch();
 
-  const { unReadNotificationCount, isLoading } = useAppSelector(
-    (state) => state.notification,
+  const { isLoading: loadingNotification, unReadNotificationCount } =
+    useAppSelector((state) => state.notification);
+
+  const { isLoading: loadingOwnerData, ownerRentals } = useAppSelector(
+    (state) => state.owner,
   );
 
   useEffect(() => {
@@ -28,20 +31,33 @@ function SideBar() {
     }
   }, [dispatch]);
 
+  const notificationData = (path: RoutePath) => {
+    switch (path) {
+      case RoutePath.NOTIFICATIONPAGE:
+        return unReadNotificationCount > 0 && unReadNotificationCount;
+      case RoutePath.OWNERSPACEPAGE:
+        return ownerRentals.length > 0 && ownerRentals.length;
+      default:
+        break;
+    }
+  };
+
   const links = isAuthenticated ? authLinks : guestLinks;
   return (
     <div
       className="bg-[#ffffff] shadow sm:h-full
        flex flex-wrap flex-col p-5 sm:p-5 "
     >
-      {isLoading || (authLoading && <Loader />)}
+      {loadingNotification || loadingOwnerData || (authLoading && <Loader />)}
 
       {/* logo */}
-      <div className="flex items-center gap-x-2 text-black">
-        <div>LOGO</div>
+      <div className="flex items-center justify-start gap-x-2 text-black">
+        <div className="p-0 m-0 size-13">
+          <img src={logo} alt={logo} />
+        </div>
         <div>
-          <div>TOOLRENT</div>
-          <div>Particuliers</div>
+          <div className="text-sm font-semibold text-blue-500 ">Tool Rent</div>
+          <div className="text-xs font-extralight italic">Particuliers</div>
         </div>
       </div>
 
@@ -55,12 +71,12 @@ function SideBar() {
           <NavigationBar
             key={link.path}
             {...link}
-            data={
-              link.path == RoutePath.NOTIFICATIONPAGE &&
-              unReadNotificationCount > 0 &&
-              unReadNotificationCount
-              // link.path == RoutePath.NOTIFICATIONPAGE && 1
-            }
+            // data={
+            //   link.path == RoutePath.NOTIFICATIONPAGE &&
+            //   unReadNotificationCount > 0 &&
+            //   unReadNotificationCount
+            // }
+            data={notificationData(link.path)}
           />
         ))}
       </div>
