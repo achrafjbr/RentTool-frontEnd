@@ -7,9 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function ProfileCard() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user, isLoading } = useAppSelector(
-    (state) => state.authentication,
-  );
+  const { user } = useAppSelector((state) => state.authentication);
   return (
     <div
       className="mt-auto flex flex-col justify-evenly h-30 

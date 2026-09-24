@@ -36,9 +36,7 @@ export default function GuestPage() {
   };
 
   const dispatch = useAppDispatch();
-  const { tools, isLoading, error, cities } = useAppSelector(
-    (state) => state.tool,
-  );
+  const { tools, isLoading, cities } = useAppSelector((state) => state.tool);
 
   useEffect(() => {
     try {
@@ -114,7 +112,7 @@ export default function GuestPage() {
                 }
                 name="search"
                 label=""
-                onChangeHandler={(e) => hanldeSearch}
+                onChangeHandler={() => hanldeSearch}
                 placeHolder="Que rechercher-vous ? (ex:percese, scie, teneuse...)"
               />
             </div>

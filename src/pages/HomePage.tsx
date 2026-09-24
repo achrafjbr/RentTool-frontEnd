@@ -128,7 +128,7 @@ export default function HomePage() {
                 }
                 name="search"
                 label=""
-                onChangeHandler={(e) => hanldeSearch}
+                onChangeHandler={() => hanldeSearch}
                 placeHolder="Que rechercher-vous ? (ex:percese, scie, teneuse...)"
               />
             </div>

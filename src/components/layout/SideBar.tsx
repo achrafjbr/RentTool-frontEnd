@@ -10,11 +10,9 @@ import { unReadNotification } from "../../features/notification/notificationThun
 import Loader from "../common/Loader";
 import logo from "../../assets/logo.png";
 function SideBar() {
-  const {
-    isLoading: authLoading,
-    isAuthenticated,
-    user,
-  } = useAppSelector((state) => state.authentication);
+  const { isLoading: authLoading, isAuthenticated } = useAppSelector(
+    (state) => state.authentication,
+  );
 
   const dispatch = useAppDispatch();
 

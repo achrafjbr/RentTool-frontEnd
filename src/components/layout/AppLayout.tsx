@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import Divider from "../common/Divider";
-import { useFadeAnimation } from "../../hooks/useFadeAnimation";
 import { useAppSelector } from "../../hooks/reduxHooks";
 import { RoutePath } from "../../routes/routes";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import { useSocketWsEvents } from "../../hooks/useSocket";
 
 function AppLayout() {

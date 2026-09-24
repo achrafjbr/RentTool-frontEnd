@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxHooks";
 import { CameraOff, Ellipsis, Pencil, Trash2 } from "lucide-react";
 import TextField from "../../auth/components/TextField";
-import { deleteToolReview } from "../toolReviews/toolReviewThunks";
 import Loader from "../../../components/common/Loader";
 import type { UserReviewResponse } from "../userReviews/userReviewTypes";
 import { deleteUserReview } from "../userReviews/userReviewThunks";

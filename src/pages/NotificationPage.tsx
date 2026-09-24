@@ -8,7 +8,6 @@ import {
 import Loader from "../components/common/Loader";
 import { BellOff } from "lucide-react";
 import toast from "react-hot-toast";
-import { useSocketWsEvents } from "../hooks/useSocket";
 export default function NotificationPage() {
   const dispatch = useAppDispatch();
   const { notifications, error, isLoading, unReadNotificationCount } =

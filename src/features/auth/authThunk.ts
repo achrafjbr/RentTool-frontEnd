@@ -1,12 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type {
-  AuthenticationResponse,
-  SignInParams,
-  SignUpParams,
-} from "./authTypes";
+import type { SignInParams, SignUpParams } from "./authTypes";
 import { loginApi, meApi, registerApi } from "./authApi";
 import type { FailureResponse } from "../../types/failureResoponse";
-import type { SuccessResponse } from "../../types/successResponse";
 
 export const register = createAsyncThunk(
   "signUp",
