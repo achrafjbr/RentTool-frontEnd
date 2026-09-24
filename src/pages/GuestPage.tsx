@@ -7,8 +7,8 @@ import ToolCompoenet from "../features/tool/componenets/ToolCompoenet";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { getAllTools, getToolCities } from "../features/tool/toolThunks";
 import Loader from "../components/common/Loader";
-import type { FailureResponse } from "../types/failureResoponse";
-import toast from "react-hot-toast";
+// import type { FailureResponse } from "../types/failureResoponse";
+// import toast from "react-hot-toast";
 import { categories } from "../utilis/constants";
 import ToolCitySelect from "../features/tool/componenets/ToolCitySelect";
 import { motion } from "motion/react";
@@ -39,13 +39,25 @@ export default function GuestPage() {
   const { tools, isLoading, cities } = useAppSelector((state) => state.tool);
 
   useEffect(() => {
-    try {
-      (() => dispatch(getAllTools()).unwrap())();
-      (() => dispatch(getToolCities()).unwrap())();
-    } catch (error) {
-      const err = error as FailureResponse;
-      toast.error(err.message);
-    }
+    console.log("TOOL PAGE MOUNTED");
+
+    dispatch(getAllTools())
+      .unwrap()
+      .then((data) => {
+        console.log("GET ALL TOOLS SUCCESS:", data);
+      })
+      .catch((error) => {
+        console.error("GET ALL TOOLS ERROR:", error);
+      });
+
+    dispatch(getToolCities())
+      .unwrap()
+      .then((data) => {
+        console.log("GET TOOL CITIES SUCCESS:", data);
+      })
+      .catch((error) => {
+        console.error("GET TOOL CITIES ERROR:", error);
+      });
   }, [dispatch]);
 
   const filterSearch = useMemo(() => {
